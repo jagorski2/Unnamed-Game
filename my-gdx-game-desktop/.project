@@ -21,5 +21,10 @@
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/android/assets</locationURI>
 		</link>
+		<link>
+			<name>textures/hex.png</name>
+			<type>1</type>
+			<location>/Users/jim/Desktop/hex.png</location>
+		</link>
 	</linkedResources>
 </projectDescription>

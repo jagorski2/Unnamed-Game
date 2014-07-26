@@ -25,8 +25,8 @@ public class HexagonBoardRenderer {
 	 ShapeRenderer r = new ShapeRenderer();
 	 PolygonSpriteBatch sprite_batch = new PolygonSpriteBatch();
 	 r.setColor(Color.BLACK);
-	 Texture black_tex = new Texture(Gdx.files.internal("black.png"));
-	 Texture red_tex = new Texture(Gdx.files.internal("red.png"));
+	 Texture black_tex = new Texture(Gdx.files.internal("textures/black.png"));
+	 Texture red_tex = new Texture(Gdx.files.internal("textures/red.png"));
 	 for (int i = 0; i < board.getWidth(); i++) {
 		 for (int j = 0; j < board.getHeight(); j++) {
 			 sprite_batch.begin();

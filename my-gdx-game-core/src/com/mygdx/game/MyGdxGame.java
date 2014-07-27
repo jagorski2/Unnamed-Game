@@ -11,7 +11,7 @@ import com.mygdx.game.hex.HexagonBoardRenderer;
 
 public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
-	Texture img;
+	//Texture img;
 	Board b;
 	HexagonBoardRenderer artist;
 	ShaderProgram shader;
@@ -27,7 +27,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(1, 1, 1, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		//batch.draw(img, 0, 0);

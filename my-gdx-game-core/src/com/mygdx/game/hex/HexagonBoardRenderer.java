@@ -9,14 +9,17 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
-public class HexagonBoardRenderer {
+public class HexagonBoardRenderer 
+{
 	private Board board;
  
- public HexagonBoardRenderer(Board board) {
+ public HexagonBoardRenderer(Board board) 
+ {
 	 this.setBoard(board);
  }
  
- public void drawBoard() {
+ public void drawBoard() 
+ {
 	 
 	 /* Line Drawing Inits */
 	 Hexagon[][] hexagons = board.getHexagons();
@@ -28,8 +31,10 @@ public class HexagonBoardRenderer {
 	 PolygonSpriteBatch sprite_batch = new PolygonSpriteBatch();
 	 
 	 /* Loop through and add hexagons as well as the outline */
-	 for (int i = 0; i < board.getWidth(); i++) {
-		 for (int j = 0; j < board.getHeight(); j++) {
+	 for (int i = 0; i < board.getWidth(); i++) 
+	 {
+		 for (int j = 0; j < board.getHeight(); j++) 
+		 {
 			
 			 Hexagon hex = hexagons[i][j];
 			 /* Generate the Polygon Region*/
@@ -54,11 +59,13 @@ public class HexagonBoardRenderer {
 	 } 
  }
 
-public Board getBoard() {
-	return board;
-}
+ 	public Board getBoard() 
+ 	{
+ 		return board;
+ 	}
 
-public void setBoard(Board board) {
-	this.board = board;
-}
+	public void setBoard(Board board) 
+	{
+		this.board = board;
+	}
 }

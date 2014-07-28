@@ -87,7 +87,7 @@ public class Hexagon {
 		return x;
 	}
 	public float[] getCenter() {
-		float ret[] = {x - h + r, y + r };
+		float ret[] = {x + r-h+10, y + r };
 		return ret;
 	}
 

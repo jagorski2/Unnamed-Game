@@ -11,6 +11,7 @@ public class Hexagon
  
 		private Point[] points;
 		private float[] vertices;
+		private Point center;
 	    private float side;
 	    private float h;
 	    private float r;
@@ -36,6 +37,7 @@ public class Hexagon
             points[3] = new Point(x + side, y + r + r);
             points[4] = new Point(x, y + r + r);
             points[5] = new Point(x - h, y + r );
+            center = new Point (x + r - h, y + r ); //TODO fix y coord / hexagon
             
            vertices = new float[12]; 	//because there is 6 vertices in a hexagon, hence 12 floats to represent all the coordinates
     		
@@ -47,6 +49,14 @@ public class Hexagon
          
 	    }
 	
+	public Point getCenter() {
+			return center;
+		}
+
+		public void setCenter(Point center) {
+			this.center = center;
+		}
+
 	public Point[] getPoints() {
 		return points;
 	}

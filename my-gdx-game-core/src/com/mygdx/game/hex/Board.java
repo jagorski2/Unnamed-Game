@@ -1,5 +1,7 @@
 package com.mygdx.game.hex;
 
+import com.mygdx.game.MyGdxGame;
+
 public class Board {
 	
     private Hexagon[][] hexagons;
@@ -69,6 +71,27 @@ public class Board {
     		}
     	}
     }
+    
+	public Hexagon closestHexagon(int x, int y) {
+		double closest = 999999999;
+		double dist;
+		Hexagon ret = null;
+		for (int i = 0; i < getWidth(); i++) {
+			for (int j = 0; j < getHeight(); j++) {
+				Hexagon hex;
+				hex = getHexagons()[i][j];
+				dist = Math.distance(x, hex.getCenter().getX(), y, hex
+						.getCenter().getY());
+				if (dist < closest) {
+					closest = dist;
+					ret = hex;
+				}
+
+			}
+		}
+		return ret;
+
+	}
 
     public Hexagon[][] getHexagons() 
     {

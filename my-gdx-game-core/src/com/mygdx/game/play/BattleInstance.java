@@ -2,6 +2,7 @@ package com.mygdx.game.play;
 
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -45,7 +46,7 @@ public class BattleInstance
 		board_artist = new HexagonBoardRenderer(board);
 		
 		
-		focused_hex = board.getHexagons()[5][5];		//delete this line
+		//focused_hex = board.getHexagons()[5][5];		//delete this line
 		
 	}
 	
@@ -75,6 +76,7 @@ public class BattleInstance
 	public void drawBattleInstance() 
 	{
 		board_artist.drawBoard();
+		focused_hex = board.closestHexagon(Gdx.input.getX(),Gdx.input.getY());
 		
 		for (BattleInstancePlayer player : players)
 		{

@@ -6,9 +6,12 @@ import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 
-public class Hexagon {
+public class Hexagon 
+{
  
 		private Point[] points;
+		private float[] vertices;
+		private Point center;
 	    private float side;
 	    private float h;
 	    private float r;
@@ -22,7 +25,7 @@ public class Hexagon {
 	    	this.CalculateVertices();
 	    }
 	    
-	    private void CalculateVertices()
+		private void CalculateVertices()
 	    {
 	        this.h = Math.CalculateH(side);
 	        this.r = Math.CalculateR(side);       
@@ -34,23 +37,26 @@ public class Hexagon {
             points[3] = new Point(x + side, y + r + r);
             points[4] = new Point(x, y + r + r);
             points[5] = new Point(x - h, y + r );
+            center = new Point (x + r - h, y + r ); //TODO fix y coord / hexagon
+            
+           vertices = new float[12]; 	//because there is 6 vertices in a hexagon, hence 12 floats to represent all the coordinates
+    		
+    		for (int i = 0; i < points.length; i++) {
+    			Point p = points[i];
+    			vertices[i*2] = p.getX();
+    			vertices[i*2 + 1] = p.getY();	
+    		}
          
 	    }
-	 /**
-	  *  use this to translate a given hexagon to the PolygonMapObject object.
-	  * @return returns the coordinates of the hexagon vertices: {x,y,x,y...x,y}
-	  */
-	public float[] getVertices() {
-		float[] ret = new float[12]; 	//because there is 6 vertices in a hexagon, hence 12 floats to represent all the coordinates
-		
-		for (int i = 0; i < points.length; i++) {
-			Point p = points[i];
-			ret[i*2] = p.getX();
-			ret[i*2 + 1] = p.getY();	
-		}
-		return ret;
-	}
 	
+	public Point getCenter() {
+			return center;
+		}
+
+		public void setCenter(Point center) {
+			this.center = center;
+		}
+
 	public Point[] getPoints() {
 		return points;
 	}
@@ -86,10 +92,6 @@ public class Hexagon {
 	public float getX() {
 		return x;
 	}
-	public float[] getCenter() {
-		float ret[] = {x + r-h+10, y + r };
-		return ret;
-	}
 
 	public void setX(float x) {
 		this.x = x;
@@ -102,7 +104,14 @@ public class Hexagon {
 	public void setY(float y) {
 		this.y = y;
 	}
+	
+    public float[] getVertices() {
+		return vertices;
+	}
 
+	public void setVertices(float[] vertices) {
+		this.vertices = vertices;
+	}
 }
 
 

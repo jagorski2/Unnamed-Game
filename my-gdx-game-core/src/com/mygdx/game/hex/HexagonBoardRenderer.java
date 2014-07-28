@@ -16,6 +16,32 @@ import com.mygdx.game.MyGdxGame;
 
 public class HexagonBoardRenderer {
 	private Board board;
+	
+    private double distance(double x1, double x2, double y1, double y2) {
+    	return java.lang.Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
+       
+      }
+    
+    private void closestHexagon(int x, int y){
+    	double closest = 999999999;
+    	float ret[] = new float[]{0,0,0,0,0,0};
+    	double dist;
+    	for (int i = 0; i < MyGdxGame.hex_number; i++) {
+    		dist =  distance(x , MyGdxGame.hex_center[i][0], y, MyGdxGame.hex_center[i][1]);
+    		//System.out.println(closest);
+    		if ( dist < closest){
+    			closest = dist;
+    			MyGdxGame.Current_Hexagon = MyGdxGame.Vert_Array[i];   
+    			//System.out.println(Arrays.toString(MyGdxGame.Vert_Array[i]));
+    		}
+    			
+		}
+    	//System.out.println(Arrays.toString(ret));
+		
+    	
+    
+    }
+
 
 	public HexagonBoardRenderer(Board board) {
 		this.setBoard(board);
@@ -35,11 +61,21 @@ public class HexagonBoardRenderer {
 	}
 
 	public void drawBoard() {
-
+		closestHexagon(Gdx.input.getX(),Gdx.input.getY());
+		//System.out.println(distance(Gdx.input.getX() , 0, Gdx.input.getY(), 0));
 		ShapeRenderer r = new ShapeRenderer();
 		r.setColor(Color.WHITE);
+
 		for (int i = 0; i < MyGdxGame.hex_number; i++) {
-			MyGdxGame.polyReg = new PolygonRegion(MyGdxGame.textureSolid,MyGdxGame.Vert_Array[i], MyGdxGame.triangles);
+		//	System.out.println("Current: " +Arrays.toString(Current_Hexagon)+ " CurrentlyDrawn: " + Arrays.toString(MyGdxGame.Vert_Array[i]));
+
+			
+			if( MyGdxGame.Current_Hexagon == MyGdxGame.Vert_Array[i]){
+				MyGdxGame.polyReg = new PolygonRegion(MyGdxGame.textureGrass,MyGdxGame.Vert_Array[i], MyGdxGame.triangles);
+			}
+			else{
+				MyGdxGame.polyReg = new PolygonRegion(MyGdxGame.textureSolid,MyGdxGame.Vert_Array[i], MyGdxGame.triangles);
+			}
 			MyGdxGame.sprite_batch.begin();
 			MyGdxGame.sprite_batch.draw(MyGdxGame.polyReg, 0, 0);
 			MyGdxGame.sprite_batch.end();

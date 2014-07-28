@@ -23,7 +23,8 @@ public class Board {
      *        Point 0 -> (x, y)
      * 
      */
-    public Board(int xOffset, int yOffset, int width,int height, int side) {
+    public Board(int xOffset, int yOffset, int width,int height, int side) 
+    {
     	this.width = width;
     	this.height = height;
     	this.side = side;
@@ -40,7 +41,8 @@ public class Board {
     /**
      * 
      */
-    private void Initialize() {
+    private void Initialize() 
+    {
     	
     	float h = Math.CalculateH(side);
     	float r = Math.CalculateR(side);
@@ -49,8 +51,10 @@ public class Board {
     	float xTranslate = 0;
     	float yTranslate = 0;
     	
-    	for (int i = 0; i < width; i ++) {
-    		for (int j = 0; j < height; j ++) {
+    	for (int i = 0; i < width; i ++) 
+    	{
+    		for (int j = 0; j < height; j ++) 
+    		{
     			if (j%2 == 1)
     				xTranslate = i * (side*2 + h*2);
     			else 
@@ -66,52 +70,82 @@ public class Board {
     	}
     }
 
-    public Hexagon[][] getHexagons() {
+    public Hexagon[][] getHexagons() 
+    {
  		return hexagons;
  	}
- 	public void setHexagons(Hexagon[][] hexagons) {
+ 	
+    public void setHexagons(Hexagon[][] hexagons) 
+ 	{
  		this.hexagons = hexagons;
  	}
- 	public int getWidth() {
+ 	
+ 	public int getWidth() 
+ 	{
  		return width;
  	}
- 	public void setWidth(int width) {
+ 	
+ 	public void setWidth(int width) 
+ 	{
  		this.width = width;
  	}
- 	public int getHeight() {
+ 	
+ 	public int getHeight() 
+ 	{
  		return height;
  	}
- 	public void setHeight(int height) {
+ 	
+ 	public void setHeight(int height) 
+ 	{
  		this.height = height;
  	}
- 	public int getxOffset() {
+ 	
+ 	public int getxOffset() 
+ 	{
  		return xOffset;
  	}
- 	public void setxOffset(int xOffset) {
+ 	public void setxOffset(int xOffset) 
+ 	{
  		this.xOffset = xOffset;
  	}
- 	public int getyOffset() {
+ 	
+ 	public int getyOffset() 
+ 	{
  		return yOffset;
  	}
- 	public void setyOffset(int yOffset) {
+ 	
+ 	public void setyOffset(int yOffset) 
+ 	{
  		this.yOffset = yOffset;
  	}
- 	public int getSide() {
+ 	
+ 	public int getSide() 
+ 	{
  		return side;
  	}
- 	public void setSide(int side) {
+ 	
+ 	public void setSide(int side) 
+ 	{
  		this.side = side;
  	}
- 	public float getPixelWidth() {
+ 	
+ 	public float getPixelWidth() 
+ 	{
  		return pixelWidth;
  	}
- 	public void setPixelWidth(float pixelWidth) {
+ 	
+ 	public void setPixelWidth(float pixelWidth) 
+ 	{
  		this.pixelWidth = pixelWidth;
  	}
- 	public float getPixelHeight() {
+ 	
+ 	public float getPixelHeight() 
+ 	{
  		return pixelHeight;
  	}
- 	public void setPixelHeight(float pixelHeight) {
+ 	
+ 	public void setPixelHeight(float pixelHeight) 
+ 	{
  		this.pixelHeight = pixelHeight;
  	}
 }

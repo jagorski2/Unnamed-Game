@@ -86,6 +86,10 @@ public class Hexagon {
 	public float getX() {
 		return x;
 	}
+	public float[] getCenter() {
+		float ret[] = {x - h + r, y + r };
+		return ret;
+	}
 
 	public void setX(float x) {
 		this.x = x;

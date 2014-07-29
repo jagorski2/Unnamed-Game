@@ -49,7 +49,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		batch = new SpriteBatch();
 
-		Board b = new Board(-20, -30, 4, 8, 50 );
+		Board b = new Board(-30, -30, 4, 8, 50 );
 
 
 		//img = new Texture("badlogic.jpg");
@@ -58,12 +58,13 @@ public class MyGdxGame extends ApplicationAdapter {
 		List<BattleInstancePlayer> players = new ArrayList<BattleInstancePlayer>();
 		players.add(new BattleInstancePlayer());
 		battle = new BattleInstance(b,players);
-
+		Gdx.graphics.setDisplayMode(800, 800, true);
 		
 	}
 
 	@Override
 	public void render () {
+		
 		Gdx.gl.glClearColor(1, 1, 1, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();

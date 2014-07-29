@@ -37,7 +37,7 @@ public class Hexagon
             points[3] = new Point(x + side, y + r + r);
             points[4] = new Point(x, y + r + r);
             points[5] = new Point(x - h, y + r );
-            center = new Point (x + r - h, y + r ); //TODO fix y coord / hexagon
+            center = new Point (x + (int)(side/2), y + r ); //TODO fix y coord / hexagon
             
            vertices = new float[12]; 	//because there is 6 vertices in a hexagon, hence 12 floats to represent all the coordinates
     		

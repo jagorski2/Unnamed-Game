@@ -1,6 +1,7 @@
 package com.mygdx.game.hex;
 
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.utils.Constants;
 
 public class Board {
 	
@@ -73,6 +74,8 @@ public class Board {
     }
     
 	public Hexagon closestHexagon(int x, int y) {
+		y= Constants.DESKTOP_WINDOW_HEIGHT - y;
+		System.out.println(height);
 		double closest = 999999999;
 		double dist;
 		Hexagon ret = null;
@@ -80,8 +83,7 @@ public class Board {
 			for (int j = 0; j < getHeight(); j++) {
 				Hexagon hex;
 				hex = getHexagons()[i][j];
-				dist = Math.distance(x, hex.getCenter().getX(), y, hex
-						.getCenter().getY());
+				dist = Math.distance(x, hex.getCenter().getX(), y, hex.getCenter().getY());
 				if (dist < closest) {
 					closest = dist;
 					ret = hex;

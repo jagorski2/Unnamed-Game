@@ -1,0 +1,11 @@
+Starting Build
+Settings evaluated using empty settings script.
+Projects loaded. Root project using build file '/Users/jim/git/board/my-gdx-game-desktop/build.gradle'.
+Included projects: [root project 'my-gdx-game-desktop']
+Evaluating root project 'my-gdx-game-desktop' using build file '/Users/jim/git/board/my-gdx-game-desktop/build.gradle'.
+Compiling build file '/Users/jim/git/board/my-gdx-game-desktop/build.gradle' using StatementExtractingScriptTransformer.
+Compiling build file '/Users/jim/git/board/my-gdx-game-desktop/build.gradle' using BuildScriptTransformer.
+
+BUILD FAILED
+
+Total time: 6.015 secs

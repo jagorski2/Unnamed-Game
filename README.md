@@ -28,7 +28,7 @@ This Assumes the following that you have followed the above install instructions
 
 To begin working on this code you must do the following:
 
-1. Open eclipse
+1. Open eclipse C:\project\eclipse\eclipse.exe
 2. Window->Open Perspective->Git / Other.. Git
 3. Clone a Git Repository
   1. URL: https://github.com/jagorski2/board.git

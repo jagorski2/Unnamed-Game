@@ -54,5 +54,16 @@ To begin working on this code you must do the following:
   6. Click Build Model
   7. Select All
   8. Finish
-16. Done
+16. Change to the Java Perspective
+17. Right click on my-gdx-game-html project which might have a Red exclamation point
+18. Select Build Path -> Configure Build Path
+19. Select Libraries Tab
+20. Select GWT SDK[missing] (unbound)
+21. Click Edit...
+22. Configure SDKs...
+23. Click Add...
+24. Installation directory: C:\project\Additional_Resources\gwt-2.6.1
+25. Click Ok
+26. Keep Clicking OK / Finish until back at Java Perspective
+27. Done!
     

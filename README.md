@@ -1,4 +1,4 @@
-board
+View as raw for better formating, somebody should fix this, idk how to.
 =====
 To begin working on this code you must do the following.
 

@@ -4,14 +4,22 @@ To begin working on this code you must do the following.
 
 1. Open eclipse
 2. Window->Open Perspective->Git / Other.. Git
-3. Clone a Git Repository
+3. 3. Clone a Git Repository
+
   a. URL: https://github.com/jagorski2/board.git
+
   b. HOST: github.com
+  
   c. Repository path: /jagorski2/board.git
+  
   d. Protocol: https
+  
   e. Port: Leave blank
+  
   f. User: Enter your username that is a collaborator on to the repository
+  
   g. Password: Enter your password for you github account.
+  
 4. CLick Next>
 5. Select All
 6. Click Next>

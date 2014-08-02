@@ -1,7 +1,24 @@
 Project Development Environment Setup
 ====
 
-1. Download [this](http://198.199.86.104/Project_Install.zip)
+1. Download [this file](http://198.199.86.104/Project_Install.zip)
+2. Unzip Project_Install.zip
+2. It Contains the following
+  1. 7z920-x64.msi - 7-Zip installer 
+  2. android.exe   - Android SDK installed
+  3. Android.zip   - Contains the tooks, APIs, and extras. (So you don't have to download them from SDK Manager)
+  4. Eclipse.zip   - Eclipse IDE for Java Developers with all of our plugins installed
+  5. gwt.zip       - GWK SDK, this for some reason does not get kept with the eclipse install.
+  6. install.bat   - Install batch file
+  7. jdk.exe       -  JDK 8.11
+3. Open up an Administator CMD.
+  1. Hit Windows Key
+  2. type cmd.exe
+  3. Right click on the cmd.exe app
+  4. Run as Administrator
+4. In the Administartor cmd.exe navigate to where Project_Install.zip was extracted
+5. Type install.bat
+6. Your Environment is now set up to develop.
 
 Cloning Instructions
 =====

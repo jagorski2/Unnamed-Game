@@ -1,6 +1,9 @@
 Cloning Instructions
 =====
+
+
 This Assumes the following:
+
 1. Eclipse for Java Developers is installed
 2. All Plugins are installed
 3. Java JDK is installed

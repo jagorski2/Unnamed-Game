@@ -4,7 +4,7 @@ To begin working on this code you must do the following.
 
 1. Open eclipse
 2. Window->Open Perspective->Git / Other.. Git
-3. 3. Clone a Git Repository
+3. Clone a Git Repository
 
   a. URL: https://github.com/jagorski2/board.git
 

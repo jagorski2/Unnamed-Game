@@ -1,6 +1,12 @@
-View as raw for better formating, somebody should fix this, idk how to.
+Cloning Instructions
 =====
-To begin working on this code you must do the following.
+This Assumes the following:
+1. Eclipse for Java Developers is installed
+2. All Plugins are installed
+3. Java JDK is installed
+4. Andoird SDK is installed
+==
+To begin working on this code you must do the following:
 
 1. Open eclipse
 2. Window->Open Perspective->Git / Other.. Git

@@ -12,7 +12,7 @@ public class DesktopLauncher {
 		cfg.title = "The Project";
 		cfg.resizable = false;
 		cfg.height = Constants.DESKTOP_WINDOW_HEIGHT;
-		cfg.width = 700;
+		cfg.width = Constants.DESKTOP_WINDOW_WIDTH;
 		//LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		new LwjglApplication(new MyGdxGame(), cfg);
 	}

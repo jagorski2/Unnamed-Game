@@ -5,23 +5,22 @@ import java.util.List;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
-
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.hex.Board;
-import com.mygdx.game.hex.HexagonBoardRenderer;
 import com.mygdx.game.play.BattleInstance;
 import com.mygdx.game.play.BattleInstancePlayer;
 
 public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
+	 
 	public static PolygonSpriteBatch sprite_batch;
 	public static TextureRegion textureGreen;
 	public static TextureRegion textureGrass;
@@ -31,12 +30,14 @@ public class MyGdxGame extends ApplicationAdapter {
 	public static float[] Current_Hexagon;
 	public static PolygonRegion polyReg;
 	public static int hex_number = 0;
-	//Texture img;
+	public static OrthographicCamera camera;
+	public static Vector3 touchPos;
 	BattleInstance battle;
 	ShaderProgram shader;
 	
 	@Override
 	public void create () {
+		touchPos = new Vector3();
 		sprite_batch = new PolygonSpriteBatch(50);
 		textureGreen = new TextureRegion(new Texture(Gdx.files.internal("textures/Green.png")),800,800);
 		textureGrass = new TextureRegion(new Texture(Gdx.files.internal("textures/Grass.jpg")),800,800);
@@ -50,28 +51,22 @@ public class MyGdxGame extends ApplicationAdapter {
 		batch = new SpriteBatch();
 
 		Board b = new Board(-30, -30, 4, 8, 50 );
+	    camera = new OrthographicCamera();
+	    camera.setToOrtho(false, 200, 200);
 
-
-		//img = new Texture("badlogic.jpg");
-		
 
 		List<BattleInstancePlayer> players = new ArrayList<BattleInstancePlayer>();
 		players.add(new BattleInstancePlayer());
-		battle = new BattleInstance(b,players);
-		Gdx.graphics.setDisplayMode(800, 800, true);
-		
+		battle = new BattleInstance(b,players);		
 	}
 
 	@Override
-	public void render () {
-		
+	public void render () {		
 		Gdx.gl.glClearColor(1, 1, 1, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-
 		battle.drawBattleInstance();
-		
-
 		batch.end();
 	}
 }

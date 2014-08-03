@@ -3,9 +3,11 @@ package com.mygdx.game.play;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.hex.Board;
 import com.mygdx.game.hex.Hexagon;
 import com.mygdx.game.hex.HexagonBoardRenderer;
@@ -19,6 +21,8 @@ import com.mygdx.game.hex.HexagonBoardRenderer;
 public class BattleInstance 
 {
 	
+
+
 	public List<BattleInstancePlayer> getPlayers() {
 		return players;
 	}
@@ -26,13 +30,14 @@ public class BattleInstance
 	public void setPlayers(List<BattleInstancePlayer> players) {
 		this.players = players;
 	}
+	
 
 	private Board board;								//the board that the battle instance will take place on.
 	private HexagonBoardRenderer board_artist;			//instance to draw the board
 	private Hexagon focused_hex;						//this is the current focus on the player on the screen, it will be highlighted
 	
 	private List<BattleInstancePlayer> players;			//contains all the players that are involved in the battle instance.
-	private int turn;									//index in the players data structure to determine the turn.
+	private int turn;								//index in the players data structure to determine the turn.
 	
 	
 	/**
@@ -75,8 +80,29 @@ public class BattleInstance
 	 */
 	public void drawBattleInstance() 
 	{
+		if(Gdx.input.isKeyPressed(Keys.W)){
+			MyGdxGame.camera.position.y +=5;
+			MyGdxGame.camera.update();
+			
+		}
+		if(Gdx.input.isKeyPressed(Keys.A)){
+			MyGdxGame.camera.position.x -=5;
+			MyGdxGame.camera.update();
+		}
+		if(Gdx.input.isKeyPressed(Keys.S)){
+			MyGdxGame.camera.position.y -=5;
+			MyGdxGame.camera.update();
+		}
+		if(Gdx.input.isKeyPressed(Keys.D)){
+			MyGdxGame.camera.position.x +=5;
+			MyGdxGame.camera.update();
+		}
+		MyGdxGame.touchPos.set(Gdx.input.getX(),Gdx.input.getY(),0);
+		MyGdxGame.camera.unproject(MyGdxGame.touchPos);
+		//MyGdxGame.touchPos.y = Constants.CAMERA_HEIGHT-MyGdxGame.touchPos.y;
+		focused_hex = board.closestHexagon(MyGdxGame.touchPos);
 		board_artist.drawBoard();
-		focused_hex = board.closestHexagon(Gdx.input.getX(),Gdx.input.getY());
+
 		
 		for (BattleInstancePlayer player : players)
 		{
@@ -98,6 +124,7 @@ public class BattleInstance
 	
 	{ 
 		ShapeRenderer r = new ShapeRenderer();
+		r.setProjectionMatrix(MyGdxGame.camera.combined);
 		r.setColor(Color.ORANGE);
 		r.begin(ShapeType.Line);
 		r.polygon(focused_hex.getVertices());

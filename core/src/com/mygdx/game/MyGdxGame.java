@@ -15,6 +15,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.hex.Board;
+import com.mygdx.game.json.JsonClient;
+import com.mygdx.game.json.ResponseCallback;
+import com.mygdx.game.json.exceptions.JsonClientException;
+import com.mygdx.game.json.models.User;
 import com.mygdx.game.play.BattleInstance;
 import com.mygdx.game.play.BattleInstancePlayer;
 
@@ -58,6 +62,19 @@ public class MyGdxGame extends ApplicationAdapter {
 		List<BattleInstancePlayer> players = new ArrayList<BattleInstancePlayer>();
 		players.add(new BattleInstancePlayer());
 		battle = new BattleInstance(b,players);		
+		
+		User user = new User();
+        user.setId(1);
+
+        ResponseCallback<User> callback = new ResponseCallback<User>() {
+            public void onResponse(User returnObject) {
+                System.err.println(returnObject.toString());
+            }
+            public void onFail(JsonClientException exception) {
+                System.err.println("Json request failed: " + exception.getMessage());
+            }
+        };
+        JsonClient.getInstance().sendPost(user, "/yes", callback, User.class);
 	}
 
 	@Override

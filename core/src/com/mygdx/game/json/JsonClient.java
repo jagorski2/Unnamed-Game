@@ -8,7 +8,7 @@ import com.mygdx.game.json.exceptions.JsonClientException;
 
 public class JsonClient {
 	
-	private String baseURL = "http://localhost:9000/yes";
+	private String baseURL = "http://localhost:9000";
 	public static final String POST = "POST";
 	
 	private static JsonClient instance;

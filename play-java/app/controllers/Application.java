@@ -67,7 +67,7 @@ public class Application extends Controller
 		try 
     	{
 			Statement statement = connection.createStatement();
-			ResultSet set = statement.executeQuery("SELECT ID, USERID, PASSWORD FROM ACCOUNTS WHERE ID =" + user.getId());
+			ResultSet set = statement.executeQuery("SELECT ID, USERID, PASSWORD FROM USER_ACCOUNTS WHERE ID =" + user.getId());
 			if (set.next())
 			{
 				result.put("id", set.getInt("ID"));

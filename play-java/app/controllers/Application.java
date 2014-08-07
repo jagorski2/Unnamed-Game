@@ -34,7 +34,7 @@ public class Application extends Controller
 			ResultSet set = statement.executeQuery("SELECT USERID, PASSWORD FROM ACCOUNTS WHERE ID = 1");
 			if (set.next())
 			{
-				retVal += set.getString("USERID");
+				retVal += set.getString("USERID"); //this is a test
 				retVal += " " + set.getString("PASSWORD");
 			}
 			

@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Json;
 import com.mygdx.game.hex.Board;
 import com.mygdx.game.json.JsonClient;
 import com.mygdx.game.json.ResponseCallback;
@@ -74,6 +75,8 @@ public class MyGdxGame extends ApplicationAdapter {
                 System.err.println("Json request failed: " + exception.getMessage());
             }
         };
+        Json json = new Json();
+        System.err.println(json.toJson(battle).length());
         JsonClient.getInstance().sendPost(user, "/yes", callback, User.class);
 	}
 

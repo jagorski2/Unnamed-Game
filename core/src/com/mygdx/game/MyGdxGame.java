@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.hex.Board;
 import com.mygdx.game.play.BattleInstance;
@@ -22,6 +23,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
 	 
 	public static PolygonSpriteBatch sprite_batch;
+	public static ShapeRenderer Project_Shape_Renderer;
 	public static TextureRegion textureGreen;
 	public static TextureRegion textureGrass;
 	public static float Vert_Array[][];
@@ -32,12 +34,22 @@ public class MyGdxGame extends ApplicationAdapter {
 	public static int hex_number = 0;
 	public static OrthographicCamera camera;
 	public static Vector3 touchPos;
+	public static Vector3 rightPos;
+	public static boolean unitIsSeclected;
+	public int ViewPortWidth;
+	public int ViewPortHeight;
 	BattleInstance battle;
 	ShaderProgram shader;
+ 
 	
 	@Override
 	public void create () {
+		ViewPortWidth = 300;
+		ViewPortHeight = 300;
+		unitIsSeclected = false;
+		Project_Shape_Renderer = new ShapeRenderer();
 		touchPos = new Vector3();
+		rightPos = new Vector3();
 		sprite_batch = new PolygonSpriteBatch(50);
 		textureGreen = new TextureRegion(new Texture(Gdx.files.internal("textures/Green.png")),800,800);
 		textureGrass = new TextureRegion(new Texture(Gdx.files.internal("textures/Grass.jpg")),800,800);
@@ -52,7 +64,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		Board b = new Board(-30, -30, 4, 8, 50 );
 	    camera = new OrthographicCamera();
-	    camera.setToOrtho(false, 200, 200);
+	    camera.setToOrtho(false, ViewPortWidth, ViewPortHeight);
 
 
 		List<BattleInstancePlayer> players = new ArrayList<BattleInstancePlayer>();
@@ -68,5 +80,6 @@ public class MyGdxGame extends ApplicationAdapter {
 		batch.begin();
 		battle.drawBattleInstance();
 		batch.end();
+		MyGdxGame.Project_Shape_Renderer.end();
 	}
 }

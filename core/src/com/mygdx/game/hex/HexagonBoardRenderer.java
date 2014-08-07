@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.play.Tile;
 
 public class HexagonBoardRenderer {
 	private Board board;
@@ -17,7 +18,7 @@ public class HexagonBoardRenderer {
 	public void drawBoard() {
 
 		/* Line Drawing Inits */
-		Hexagon[][] hexagons = board.getHexagons();
+		Tile[][] tiles = board.getTiles();
 		ShapeRenderer r = new ShapeRenderer();
 		r.setProjectionMatrix(MyGdxGame.camera.combined);
 		r.setColor(Color.BLACK);
@@ -32,7 +33,7 @@ public class HexagonBoardRenderer {
 		for (int i = 0; i < board.getWidth(); i++) {
 			for (int j = 0; j < board.getHeight(); j++) {
 
-				Hexagon hex = hexagons[i][j];
+				Hexagon hex = tiles[i][j].getHexagon();
 				/* Generate the Polygon Region */
 				PolygonRegion polyReg = new PolygonRegion(
 						MyGdxGame.textureGreen, hex.getVertices(),

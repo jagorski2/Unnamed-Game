@@ -1,10 +1,11 @@
 package com.mygdx.game.hex;
 
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.play.Tile;
 
 public class Board {
 
-	private Hexagon[][] hexagons;
+	private Tile[][] tiles;
 	private int width;
 	private int height;
 
@@ -50,7 +51,7 @@ public class Board {
 
 		float h = Math.CalculateH(side);
 		float r = Math.CalculateR(side);
-		hexagons = new Hexagon[width][height];
+		tiles = new Tile[width][height];
 
 		float xTranslate = 0;
 		float yTranslate = 0;
@@ -66,9 +67,9 @@ public class Board {
 				else
 					yTranslate = j * r;
 
-				hexagons[i][j] = new Hexagon(xOffset + xTranslate, yOffset
-						+ yTranslate, side);
-
+				tiles[i][j] = new Tile();
+				Hexagon hex = new Hexagon(xOffset + xTranslate, yOffset + yTranslate, side);
+				tiles[i][j].setHexagon(hex);
 			}
 		}
 	}
@@ -83,7 +84,7 @@ public class Board {
 		for (int i = 0; i < getWidth(); i++) {
 			for (int j = 0; j < getHeight(); j++) {
 				Hexagon hex;
-				hex = getHexagons()[i][j];
+				hex = tiles[i][j].getHexagon();
 				centerVect.set(hex.getCenter().getX(), hex.getCenter().getY(),0);
 				dist = Math.distance(x, centerVect.x, y, centerVect.y);
 				if (dist < closest) {
@@ -96,13 +97,13 @@ public class Board {
 		return ret;
 
 	}
-
-	public Hexagon[][] getHexagons() {
-		return hexagons;
+	
+	public Tile[][] getTiles() {
+		return tiles;
 	}
 
-	public void setHexagons(Hexagon[][] hexagons) {
-		this.hexagons = hexagons;
+	public void setTiles(Tile[][] tiles) {
+		this.tiles = tiles;
 	}
 
 	public int getWidth() {

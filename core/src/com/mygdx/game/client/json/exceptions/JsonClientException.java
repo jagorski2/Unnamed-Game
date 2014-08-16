@@ -1,4 +1,4 @@
-package com.mygdx.game.json.exceptions;
+package com.mygdx.game.client.json.exceptions;
 
 public class JsonClientException extends Exception {
 

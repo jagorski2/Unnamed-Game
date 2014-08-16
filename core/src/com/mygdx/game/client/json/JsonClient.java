@@ -1,10 +1,11 @@
-package com.mygdx.game.json;
+package com.mygdx.game.client.json;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
-import com.badlogic.gdx.Net.HttpRequest;
 import com.badlogic.gdx.net.HttpStatus;
-import com.mygdx.game.json.exceptions.JsonClientException;
+import com.badlogic.gdx.Net.HttpResponseListener;
+import com.mygdx.game.client.json.exceptions.JsonClientException;
+import com.mygdx.game.hex.Board;
 
 public class JsonClient {
 	
@@ -66,9 +67,32 @@ public class JsonClient {
 					
 				}
 	        });
+	        
 
 	    }
+	 	
+	 /**
+	  * this method is specifically for testing purposes for loading a board from the database. this is not a good design, just a proof
+	  * @param board
+	  * @param uri
+	  */
+	 	public void mySendRequest(Board board, String uri) {
+	 		
+	 		String requestJson = JsonUtil.getInstance().toJson("");
+	        Net.HttpRequest request = new Net.HttpRequest(POST);
+	        final String url = getURL(uri);
+	        request.setUrl(url);
 
+	        request.setContent(requestJson);
+	        request.setHeader("Content-Type", "application/json");
+	        request.setHeader("Accept", "application/json");
+	        HttpResponseListener listen = new BoardResponseListener(board);    
+			
+	        //creates a new thread, returns control right this this class.
+	        Gdx.net.sendHttpRequest(request,listen);
+	 	}
+	        
+			
 	    private String getURL(String uri) {
 	        return baseURL + uri;
 	    }

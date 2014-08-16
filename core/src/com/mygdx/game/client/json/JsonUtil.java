@@ -1,4 +1,4 @@
-package com.mygdx.game.json;
+package com.mygdx.game.client.json;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;

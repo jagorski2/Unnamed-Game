@@ -1,10 +1,19 @@
 package com.mygdx.game.hex;
 
+import java.util.List;
+
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
+import com.mygdx.game.client.json.models.Tile;
 
 public class Board {
 
 	private Hexagon[][] hexagons;
+	
+	private boolean ready;				//used to determine whether or not the board is ready to play with
+	
 	private int width;
 	private int height;
 
@@ -31,7 +40,14 @@ public class Board {
 		this.side = side;
 		this.xOffset = xOffset + side;
 		this.yOffset = yOffset + side;
-		Initialize();
+		this.initialize();
+	}
+	
+	public Board(int xOffset, int yOffset, int side) {
+		this.side = side;
+		this.xOffset = xOffset + side;
+		this.yOffset = yOffset + side;
+		ready = false;
 	}
 
 	/**
@@ -46,7 +62,7 @@ public class Board {
 	/**
      * 
      */
-	private void Initialize() {
+	private void initialize() {
 
 		float h = Math.CalculateH(side);
 		float r = Math.CalculateR(side);
@@ -71,6 +87,70 @@ public class Board {
 
 			}
 		}
+		ready = true;
+	}
+	
+	public void initialize(List<Tile> tiles) {
+		float h = Math.CalculateH(side);
+		float r = Math.CalculateR(side);
+		
+		Point point = this.determineGridBounds(tiles);
+		width = (int) point.getX();
+		height = (int) point.getY();
+		hexagons = new Hexagon[width][height];
+
+		float xTranslate = 0;
+		float yTranslate = 0;
+		
+		for (int i = 0; i < tiles.size(); i ++) {
+			
+			Tile tile = tiles.get(i);
+			int x = tile.getX();
+			int y = tile.getY();
+			
+			if (x == 1) {
+				System.out.println("x is 1");
+			}
+			
+			if (y % 2 == 1)
+				xTranslate = x * (side * 2 + h * 2);
+			else
+				xTranslate = x * (side * 2 + h * 2) + side + h;
+			if (x % 2 == 0)
+				yTranslate = y * r;
+			else
+				yTranslate = y * r;
+			System.out.println(tile.toString());
+			Hexagon hex = new Hexagon(xOffset + xTranslate,yOffset + yTranslate , side);
+			hexagons[x][y] = hex;
+		}
+		
+		Hexagon hex = new Hexagon(0,0,2);
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				if (hexagons[i][j] == null) {
+					hexagons[i][j] = hex;
+				}
+			}
+		}
+		ready = true;
+	}
+	
+	private Point determineGridBounds(List<Tile> tiles) {
+
+		int greatestX = 0;
+		int greatestY = 0;
+		
+		for (Tile tile : tiles) {
+			if (tile.getX() > greatestX) {
+				greatestX = tile.getX();
+			}
+			if (tile.getY() > greatestY) {
+				greatestY = tile.getY();
+			}	
+		}
+		
+		return new Point(greatestX,greatestY);
 	}
 
 	public Hexagon closestHexagon(Vector3 vect) {
@@ -95,6 +175,10 @@ public class Board {
 		}
 		return ret;
 
+	}
+	
+	public void loadBoard(List<Tile> tiles) {
+		
 	}
 
 	public Hexagon[][] getHexagons() {
@@ -159,5 +243,13 @@ public class Board {
 
 	public void setPixelHeight(float pixelHeight) {
 		this.pixelHeight = pixelHeight;
+	}
+
+	public boolean isReady() {
+		return ready;
+	}
+
+	public void setReady(boolean ready) {
+		this.ready = ready;
 	}
 }

@@ -1,1 +1,1 @@
-addSbtPlugin("com.typesafe.sbt" % "sbt-echo-play" % "0.1.4")
+addSbtPlugin("com.typesafe.sbt" % "sbt-echo-play" % "0.1.5")

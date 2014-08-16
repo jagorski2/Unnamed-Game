@@ -22,6 +22,8 @@ public class Board {
 	private int side;
 	private float pixelWidth;
 	private float pixelHeight;
+	
+	private List<Tile> tiles;
 
 	/**
 	 * 
@@ -90,11 +92,11 @@ public class Board {
 		ready = true;
 	}
 	
-	public void initialize(List<Tile> tiles) {
+	public void initializeWithTiles() {
 		float h = Math.CalculateH(side);
 		float r = Math.CalculateR(side);
 		
-		Point point = this.determineGridBounds(tiles);
+		Point point = this.determineGridBounds();
 		width = (int) point.getX();
 		height = (int) point.getY();
 		hexagons = new Hexagon[width][height];
@@ -103,14 +105,9 @@ public class Board {
 		float yTranslate = 0;
 		
 		for (int i = 0; i < tiles.size(); i ++) {
-			
 			Tile tile = tiles.get(i);
 			int x = tile.getX();
 			int y = tile.getY();
-			
-			if (x == 1) {
-				System.out.println("x is 1");
-			}
 			
 			if (y % 2 == 1)
 				xTranslate = x * (side * 2 + h * 2);
@@ -133,10 +130,10 @@ public class Board {
 				}
 			}
 		}
-		ready = true;
+		tiles = null;
 	}
 	
-	private Point determineGridBounds(List<Tile> tiles) {
+	private Point determineGridBounds() {
 
 		int greatestX = 0;
 		int greatestY = 0;
@@ -150,7 +147,7 @@ public class Board {
 			}	
 		}
 		
-		return new Point(greatestX,greatestY);
+		return new Point(greatestX + 1, greatestY + 1);
 	}
 
 	public Hexagon closestHexagon(Vector3 vect) {
@@ -174,7 +171,6 @@ public class Board {
 			}
 		}
 		return ret;
-
 	}
 	
 	public void loadBoard(List<Tile> tiles) {
@@ -251,5 +247,13 @@ public class Board {
 
 	public void setReady(boolean ready) {
 		this.ready = ready;
+	}
+
+	public List<Tile> getTiles() {
+		return tiles;
+	}
+
+	public void setTiles(List<Tile> tiles) {
+		this.tiles = tiles;
 	}
 }

@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.client.BoardClient;
+import com.mygdx.game.client.BoardRunnable;
 import com.mygdx.game.client.json.models.User;
 import com.mygdx.game.hex.Board;
 import com.mygdx.game.play.BattleInstance;
@@ -80,8 +81,27 @@ public class MyGdxGame extends ApplicationAdapter {
 		Gdx.gl.glClearColor(1, 1, 1, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.setProjectionMatrix(camera.combined);
-		
-		if (board.isReady()) {
+			
+		boardLoopLogic();
+
+	}
+
+	private void boardLoopLogic() {
+		if (board.getTiles() != null && !board.isReady()) {
+			board.setReady(true);
+			
+			/*
+			 * We need two if statements in this draw loop to prevent more than one thread being created
+			 * 
+			 * creates and runs a new thread to set up the board tiles
+			 * i cannot do this on the responselistener's thread because 
+			 * it gets destroyed automatically from what i have noticed
+			 */
+			Thread boardThread = new Thread(new BoardRunnable(board));
+			boardThread.start();
+		}
+		if (board.isReady() && board.getTiles() == null) {
+			
 			batch.begin();
 			battle.drawBattleInstance();
 			batch.end();

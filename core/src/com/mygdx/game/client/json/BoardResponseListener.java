@@ -1,6 +1,7 @@
 package com.mygdx.game.client.json;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.badlogic.gdx.Net.HttpResponse;
@@ -14,12 +15,10 @@ import com.mygdx.game.hex.Board;
 
 public class BoardResponseListener implements HttpResponseListener{
 	
-	Board board;
-	List<Tile> tiles;
+	Board board;			//this should ALWAYS be a reference to the main game board
 	
 	public BoardResponseListener(Board board) {
 		this.board = board;
-		tiles = new ArrayList<Tile>();
 	}
 
 	@Override
@@ -31,18 +30,33 @@ public class BoardResponseListener implements HttpResponseListener{
          JsonReader jRead = new JsonReader();
          JsonValue jVal = jRead.parse(httpResponse.getResultAsString());
          JsonIterator jitr = jVal.iterator();
+         
+         List<Tile> tiles = new LinkedList<Tile>();	//this will be passed to board at the end of this responseListener
+         
          while (jitr.hasNext()) {
         	 JsonValue val = jitr.next();
         	 Tile tile = JsonUtil.getInstance().fromJson(Tile.class, val.toString());
         	 tiles.add(tile);
          }
-         board.initialize(tiles);
+         board.setTiles(tiles);
+         
+         /*
+          * board.initalizeWithTiles()
+          * 
+          * This method call does not work because it gets interrupted and stopped in the middle of its loop (from my experience)
+          * my theory is because the library only gives this response listener X seconds or clock cycles to complete or some bullshit like that
+          * 
+          * if you can think of a better reason please let me know, i'm very curious
+          * 
+          * but anyway, this is why I made a new thread in the game loop and had it initialize the board once we have the response tiles
+          * 
+          */
 	}
 
 	@Override
 	public void failed(Throwable t) {
+		t.printStackTrace();
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -50,9 +64,4 @@ public class BoardResponseListener implements HttpResponseListener{
 		// TODO Auto-generated method stub
 		
 	}
-	
-	private void initializeBoard() {
-		
-	}
-
 }

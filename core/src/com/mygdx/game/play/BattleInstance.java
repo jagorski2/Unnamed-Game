@@ -49,7 +49,6 @@ public class BattleInstance
 	private List<BattleInstancePlayer> players;			//contains all the players that are involved in the battle instance.
 	private int turn;								//index in the players data structure to determine the turn.
 	private Tile[][] tiles;
-
 	
 	/**
 	 * There is no reason to have an instance of this class without a board and a list of players...
@@ -89,8 +88,6 @@ public class BattleInstance
 	 */
 	public void drawBattleInstance() 
 	{
-		
-		
 		if((Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP))){// && MyGdxGame.camera.position.y < 300)){
 			MyGdxGame.camera.position.y +=5;
 			MyGdxGame.camera.update();
@@ -149,9 +146,6 @@ public class BattleInstance
 		}
 	
 		board_artist.drawBoard();
-		this.drawOccupiedTiles();
-
-		
 		for (BattleInstancePlayer player : players)
 		{
 			player.drawAllUnits();
@@ -169,7 +163,6 @@ public class BattleInstance
 	 * Draw the focused hexagon of the player.
 	 */
 	public void drawFocusedHexagon() 
-
 	{
 
 		MyGdxGame.Project_Shape_Renderer

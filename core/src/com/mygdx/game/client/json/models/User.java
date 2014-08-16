@@ -1,11 +1,13 @@
-package assets;
+package com.mygdx.game.client.json.models;
+
+import java.util.ArrayList;
 
 public class User {
 	
 	private int id;
 	private String userid;
 	private String password;
-
+	
 	public String getUserid() {
 		return userid;
 	}

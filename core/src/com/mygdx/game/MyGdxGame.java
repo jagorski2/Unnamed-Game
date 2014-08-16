@@ -13,6 +13,9 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.client.BoardClient;
+import com.mygdx.game.client.json.models.User;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.hex.Board;
@@ -42,8 +45,12 @@ public class MyGdxGame extends ApplicationAdapter {
 	ShaderProgram shader;
  
 	
+	
+	Board board;			//this is only instantiated when we get a response from the server
+	
 	@Override
 	public void create () {
+		touchPos = new Vector3();
 		ViewPortWidth = 300;
 		ViewPortHeight = 300;
 		unitIsSeclected = false;
@@ -69,7 +76,17 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		List<BattleInstancePlayer> players = new ArrayList<BattleInstancePlayer>();
 		players.add(new BattleInstancePlayer());
-		battle = new BattleInstance(b,players);		
+
+		User user = new User();
+        user.setId(1);
+       
+        board = new Board(-30,-30,50);
+
+		battle = new BattleInstance(board,players);		
+		
+        Thread boardInitialize = new Thread(new BoardClient(board));
+        boardInitialize.start();
+        
 	}
 
 	@Override
@@ -77,9 +94,15 @@ public class MyGdxGame extends ApplicationAdapter {
 		Gdx.gl.glClearColor(1, 1, 1, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.setProjectionMatrix(camera.combined);
-		batch.begin();
-		battle.drawBattleInstance();
-		batch.end();
+		boardLoopLogic();
 		MyGdxGame.Project_Shape_Renderer.end();
+	}
+
+	private void boardLoopLogic() {
+		if (board.isReady()) {
+			batch.begin();
+			battle.drawBattleInstance();
+			batch.end();
+		}
 	}
 }

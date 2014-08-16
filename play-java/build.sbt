@@ -14,3 +14,5 @@ libraryDependencies ++= Seq(
 )
 
 libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.27"
+
+libraryDependencies += "org.mybatis" % "mybatis" % "3.2.7"

@@ -1,5 +1,10 @@
 package com.mygdx.game.hex;
-
+import java.util.List;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
+import com.mygdx.game.client.json.models.BoardsTile;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.play.Tile;
 import com.mygdx.game.play.Unit;
@@ -7,6 +12,8 @@ import com.mygdx.game.utils.UnitTypeConstants;
 
 public class Board {
 
+	private boolean ready;				//used to determine whether or not the board is ready to play with
+	
 	private Tile[][] tiles;
 	private int width;
 	private int height;
@@ -16,6 +23,8 @@ public class Board {
 	private int side;
 	private float pixelWidth;
 	private float pixelHeight;
+	
+	private List<BoardsTile> boardsTiles;
 
 	/**
 	 * 
@@ -34,7 +43,14 @@ public class Board {
 		this.side = side;
 		this.xOffset = xOffset + side;
 		this.yOffset = yOffset + side;
-		Initialize();
+		this.initialize();
+	}
+	
+	public Board(int xOffset, int yOffset, int side) {
+		this.side = side;
+		this.xOffset = xOffset + side;
+		this.yOffset = yOffset + side;
+		ready = false;
 	}
 
 	/**
@@ -49,7 +65,7 @@ public class Board {
 	/**
      * 
      */
-	private void Initialize() {
+	private void initialize() {
 
 		float h = Math.CalculateH(side);
 		float r = Math.CalculateR(side);
@@ -87,8 +103,74 @@ public class Board {
 					tiles[i][j].setUnit(new Unit(UnitTypeConstants.Archer));
 
 				}
+				
+				
 			}
 		}
+		ready = true;
+	}
+	
+	public void initializeWithTiles() {
+		float h = Math.CalculateH(side);
+		float r = Math.CalculateR(side);
+		
+		Point point = this.determineGridBounds();
+		width = (int) point.getX();
+		height = (int) point.getY();
+		tiles = new Tile[width][height];
+
+		float xTranslate = 0;
+		float yTranslate = 0;
+		
+		for (int i = 0; i < boardsTiles.size(); i ++) {
+			BoardsTile tile = boardsTiles.get(i);
+			int x = tile.getX();
+			int y = tile.getY();
+			
+			if (y % 2 == 1)
+				xTranslate = x * (side * 2 + h * 2);
+			else
+				xTranslate = x * (side * 2 + h * 2) + side + h;
+			if (x % 2 == 0)
+				yTranslate = y * r;
+			else
+				yTranslate = y * r;
+			System.out.println(tile.toString());
+			tiles[x][y] = new Tile();
+			Hexagon hex = new Hexagon(xOffset + xTranslate, yOffset+ yTranslate, side);
+			tiles[x][y].setHexagon(hex);
+		}
+		
+		Tile tile = new Tile();
+		Hexagon hex = new Hexagon(0,0,2);
+		tile.setHexagon(hex);
+		
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				if (tiles[i][j] == null) {
+					tiles[i][j] = tile;
+				}
+			}
+		}
+		boardsTiles = null;
+		ready = true;
+	}
+	
+	private Point determineGridBounds() {
+
+		int greatestX = 0;
+		int greatestY = 0;
+		
+		for (BoardsTile tile : boardsTiles) {
+			if (tile.getX() > greatestX) {
+				greatestX = tile.getX();
+			}
+			if (tile.getY() > greatestY) {
+				greatestY = tile.getY();
+			}	
+		}
+		
+		return new Point(greatestX + 1, greatestY + 1);
 	}
 
 	public Tile closestTile(Vector3 vect) {
@@ -113,7 +195,18 @@ public class Board {
 			}
 		}
 		return ret;
+	}
+	
+	public void loadBoard(List<Tile> tiles) {
+		
+	}
+	
+	public boolean isReady() {
+		return ready;
+	}
 
+	public void setReady(boolean ready) {
+		this.ready = ready;
 	}
 
 	public Tile[][] getTiles() {
@@ -178,5 +271,13 @@ public class Board {
 
 	public void setPixelHeight(float pixelHeight) {
 		this.pixelHeight = pixelHeight;
+	}
+
+	public List<BoardsTile> getBoardsTiles() {
+		return boardsTiles;
+	}
+
+	public void setBoardsTiles(List<BoardsTile> boardsTiles) {
+		this.boardsTiles = boardsTiles;
 	}
 }

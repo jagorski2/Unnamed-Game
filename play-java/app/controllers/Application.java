@@ -6,22 +6,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import assets.User;
+import play.db.DB;
+import play.libs.Json;
+import play.mvc.Controller;
+import play.mvc.Result;
+import views.html.index;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.mysql.jdbc.PreparedStatement;
 
-import play.libs.Json;
-import play.mvc.Controller;
-import play.mvc.Http.Request;
-import play.mvc.Http.RequestBody;
-import play.mvc.Result;
-import views.html.index;
-import play.db.*;
+import dao.DAOImpl;
+import dao.models.User;
 
 public class Application extends Controller 
 {
@@ -31,10 +28,10 @@ public class Application extends Controller
     	try 
     	{
 			Statement statement = connection.createStatement();
-			ResultSet set = statement.executeQuery("SELECT USERID, PASSWORD FROM ACCOUNTS WHERE ID = 1");
+			ResultSet set = statement.executeQuery("SELECT USERNAME, PASSWORD FROM USER_ACCOUNTS WHERE ID = 1");
 			if (set.next())
 			{
-				retVal += set.getString("USERID");
+				retVal += set.getString("USERNAME"); //this is a test
 				retVal += " " + set.getString("PASSWORD");
 			}
 			
@@ -49,45 +46,21 @@ public class Application extends Controller
     public static Result sayHello() {
    		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode result = Json.newObject();
-		User user = new User();
+		User user;
+		
 		try {
 			user = mapper.readValue(request().body().asJson().toString(), User.class);
 		} catch (JsonParseException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (JsonMappingException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
-		Connection connection = DB.getConnection();
-		try 
-    	{
-			Statement statement = connection.createStatement();
-			ResultSet set = statement.executeQuery("SELECT ID, USERID, PASSWORD FROM ACCOUNTS WHERE ID =" + user.getId());
-			if (set.next())
-			{
-				result.put("id", set.getInt("ID"));
-				result.put("userid", set.getString("USERID"));
-			    result.put("password", set.getString("PASSWORD"));
-			}
-			if (connection != null)
-			{
-				if (!connection.isClosed())
-				{
-					connection.close();
-				}
-			}
-			
-		} 
-		catch (SQLException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		DAOImpl Dao = new DAOImpl();
+		String ret = Dao.getUser(1);
+		result.put("password", ret);
 	    return ok(result);
     }
 

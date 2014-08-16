@@ -26,6 +26,7 @@ public class HexagonBoardRenderer {
 		// TextureRegion textureGreen; = new TextureRegion(new Texture
 		// Gdx.files.internal("textures/grass.jpg")), 800, 800);
 
+
 		MyGdxGame.sprite_batch.setProjectionMatrix(MyGdxGame.camera.combined);
 
 		/* Loop through and add hexagons as well as the outline */
@@ -43,7 +44,6 @@ public class HexagonBoardRenderer {
 				MyGdxGame.Project_Shape_Renderer.begin(ShapeType.Line);
 				MyGdxGame.Project_Shape_Renderer.polygon(hex.getVertices());
 				MyGdxGame.Project_Shape_Renderer.end();
-
 			}
 		}
 	}

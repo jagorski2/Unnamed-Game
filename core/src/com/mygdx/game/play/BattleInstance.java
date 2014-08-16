@@ -16,7 +16,6 @@ import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.utils.UnitTypeConstants;
 import com.mygdx.game.hex.Board;
 import com.mygdx.game.hex.Hexagon;
-import com.mygdx.game.hex.HexagonBoardRenderer;
 
 
 /**
@@ -40,9 +39,7 @@ public class BattleInstance
 	
 
 	private Board board;								//the board that the battle instance will take place on.
-	private HexagonBoardRenderer board_artist;			//instance to draw the board
 	private Tile focused_tile; 						//this is the current focus on the player on the screen, it will be highlighted
-	private Tile clicked_tile;
 	private Tile selected_tile;
 	private Unit selected_Unit;
 	
@@ -58,9 +55,6 @@ public class BattleInstance
 	{
 		this.board = board;
 		this.players = players;
-		board_artist = new HexagonBoardRenderer(board);
-		
-		
 	}
 	
 	public Board getBoard()
@@ -125,7 +119,7 @@ public class BattleInstance
 		Tile clicked_tile = null;
 		if (Gdx.input.justTouched()) {
 			if(clicked_tile == selected_tile){
-				MyGdxGame.unitIsSeclected = false;
+				MyGdxGame.unitIsSelected = false;
 			}
 			MyGdxGame.rightPos.set(Gdx.input.getX(),Gdx.input.getY(),0);
 			MyGdxGame.camera.unproject(MyGdxGame.rightPos);
@@ -133,19 +127,19 @@ public class BattleInstance
 			if(clicked_tile.isOccupied()){
 				selected_Unit = clicked_tile.getUnit();
 				selected_tile = clicked_tile;
-				MyGdxGame.unitIsSeclected = true;
+				MyGdxGame.unitIsSelected = true;
 				
-			}else if(!clicked_tile.isOccupied() && MyGdxGame.unitIsSeclected){
+			}else if(!clicked_tile.isOccupied() && MyGdxGame.unitIsSelected){
+				
 					clicked_tile.setUnit(selected_Unit);
 					clicked_tile.setOccupied(true);
 					selected_tile.setOccupied(false);
-					MyGdxGame.unitIsSeclected = false;					
+					MyGdxGame.unitIsSelected = false;					
 				
 			}
-
 		}
-	
-		board_artist.drawBoard();
+
+		board.drawBoard();
 		for (BattleInstancePlayer player : players)
 		{
 			player.drawAllUnits();
@@ -155,6 +149,7 @@ public class BattleInstance
 		{
 			this.drawFocusedHexagon();
 		}
+		this.drawOccupiedTiles();
 	}
 	
 	
@@ -174,44 +169,20 @@ public class BattleInstance
 		MyGdxGame.Project_Shape_Renderer.end();
 	}
 
+	//@Deprecated
 	public void drawOccupiedTiles() {
 		tiles = board.getTiles();
 		for (int i = 0; i < board.getWidth(); i++) {
 			for (int j = 0; j < board.getHeight(); j++) {
-				Hexagon hex = tiles[i][j].getHexagon();
 				if (tiles[i][j].isOccupied()) {
-					if (tiles[i][j].getUnit().getUnitType() == UnitTypeConstants.Warrior  ){
-						this.drawWarrior(tiles[i][j].getHexagon());						
-					}
-					if (tiles[i][j].getUnit().getUnitType() == UnitTypeConstants.Mage){
-						this.drawMage(tiles[i][j].getHexagon());						
-					}
-					if (tiles[i][j].getUnit().getUnitType() == UnitTypeConstants.Archer){
-						this.drawArcher(tiles[i][j].getHexagon());						
-					}
+					 Hexagon hex = tiles[i][j].getHexagon();
+					 Unit unit = tiles[i][j].getUnit();
+					 unit.setHexagon(hex);
+					 unit.drawUnit();
+				}
 			}
-		}
 		MyGdxGame.Project_Shape_Renderer.setColor(Color.BLACK);
-	}
 		}
-
-	private void drawWarrior(Hexagon hexagon) {
-		MyGdxGame.Project_Shape_Renderer.setColor(Color.RED);
-		MyGdxGame.Project_Shape_Renderer.begin(ShapeType.Line);
-		MyGdxGame.Project_Shape_Renderer.polygon(hexagon.getVertices());
-		MyGdxGame.Project_Shape_Renderer.end();
-	}
-	private void drawMage(Hexagon hexagon) {
-		MyGdxGame.Project_Shape_Renderer.setColor(Color.BLUE);
-		MyGdxGame.Project_Shape_Renderer.begin(ShapeType.Line);
-		MyGdxGame.Project_Shape_Renderer.polygon(hexagon.getVertices());
-		MyGdxGame.Project_Shape_Renderer.end();
-	}
-	private void drawArcher(Hexagon hexagon) {
-		MyGdxGame.Project_Shape_Renderer.setColor(Color.GREEN);
-		MyGdxGame.Project_Shape_Renderer.begin(ShapeType.Line);
-		MyGdxGame.Project_Shape_Renderer.polygon(hexagon.getVertices());
-		MyGdxGame.Project_Shape_Renderer.end();
 	}
 
 	public Hexagon getFocusedTilesHexagon() 

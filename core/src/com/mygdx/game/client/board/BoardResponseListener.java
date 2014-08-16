@@ -1,4 +1,4 @@
-package com.mygdx.game.client.json;
+package com.mygdx.game.client.board;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -10,6 +10,7 @@ import com.badlogic.gdx.net.HttpStatus;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.JsonValue.JsonIterator;
+import com.mygdx.game.client.json.JsonUtil;
 import com.mygdx.game.client.json.models.BoardsTile;
 import com.mygdx.game.hex.Board;
 
@@ -33,6 +34,7 @@ public class BoardResponseListener implements HttpResponseListener{
          
          List<BoardsTile> tiles = new LinkedList<BoardsTile>();	//this will be passed to board at the end of this responseListener
          
+         //this grabs each Tile element from the  json string
          while (jitr.hasNext()) {
         	 JsonValue val = jitr.next();
         	 BoardsTile tile = JsonUtil.getInstance().fromJson(BoardsTile.class, val.toString());

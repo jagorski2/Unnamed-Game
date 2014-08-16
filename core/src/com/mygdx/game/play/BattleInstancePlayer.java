@@ -3,6 +3,8 @@ package com.mygdx.game.play;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mygdx.game.hex.Board;
+
 /**
  * This class handles all data referring to a Player during a given battle
  * instance.
@@ -43,8 +45,9 @@ public class BattleInstancePlayer {
 		for (int i = 0; i < units.size(); i++) {
 			Unit unit = units.get(i);
 			if (unit != null) {
-				unit.drawUnit();
+				//TODO draw unit...
 			}
 		}
+
 	}
 }

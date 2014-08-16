@@ -14,7 +14,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
-import com.mygdx.game.client.BoardClient;
+import com.mygdx.game.client.board.BoardClient;
 import com.mygdx.game.client.json.models.User;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
@@ -38,7 +38,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	public static OrthographicCamera camera;
 	public static Vector3 touchPos;
 	public static Vector3 rightPos;
-	public static boolean unitIsSeclected;
+	public static boolean unitIsSelected;
 	public int ViewPortWidth;
 	public int ViewPortHeight;
 	BattleInstance battle;
@@ -53,7 +53,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		touchPos = new Vector3();
 		ViewPortWidth = 300;
 		ViewPortHeight = 300;
-		unitIsSeclected = false;
+		unitIsSelected = false;
 		Project_Shape_Renderer = new ShapeRenderer();
 		touchPos = new Vector3();
 		rightPos = new Vector3();

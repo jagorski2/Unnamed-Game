@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
 import com.badlogic.gdx.net.HttpStatus;
 import com.badlogic.gdx.Net.HttpResponseListener;
+import com.mygdx.game.client.board.BoardResponseListener;
 import com.mygdx.game.client.json.exceptions.JsonClientException;
 import com.mygdx.game.hex.Board;
 
@@ -94,7 +95,7 @@ public class JsonClient {
 	        request.setHeader("Accept", "application/json");
 	        HttpResponseListener listen = new BoardResponseListener(board);    
 			
-	        //creates a new thread, returns control right this this class.
+	        //creates a new thread, returns control right to this class.
 	        //NOTE: I noticed that this thread gets destroyed after the responseListener calls handleHttpResponse()
 	        Gdx.net.sendHttpRequest(request,listen);
 	 	}

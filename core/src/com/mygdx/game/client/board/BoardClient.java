@@ -1,4 +1,4 @@
-package com.mygdx.game.client;
+package com.mygdx.game.client.board;
 
 import com.mygdx.game.client.json.JsonClient;
 import com.mygdx.game.hex.Board;

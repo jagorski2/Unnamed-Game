@@ -15,7 +15,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.client.BoardClient;
-import com.mygdx.game.client.BoardRunnable;
 import com.mygdx.game.client.json.models.User;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
@@ -81,10 +80,13 @@ public class MyGdxGame extends ApplicationAdapter {
 		User user = new User();
         user.setId(1);
        
-        BoardClient boardClient = new BoardClient();
         board = new Board(-30,-30,50);
-        boardClient.getBoardFromServer(board);
+
 		battle = new BattleInstance(board,players);		
+		
+        Thread boardInitialize = new Thread(new BoardClient(board));
+        boardInitialize.start();
+        
 	}
 
 	@Override
@@ -97,21 +99,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	}
 
 	private void boardLoopLogic() {
-		if (board.getTiles() != null && !board.isReady()) {
-			board.setReady(true);
-			
-			/*
-			 * We need two if statements in this draw loop to prevent more than one thread being created
-			 * 
-			 * creates and runs a new thread to set up the board tiles
-			 * i cannot do this on the responselistener's thread because 
-			 * it gets destroyed automatically from what i have noticed
-			 */
-			Thread boardThread = new Thread(new BoardRunnable(board));
-			boardThread.start();
-		}
-		if (board.isReady() && board.getTiles() == null) {
-			
+		if (board.isReady()) {
 			batch.begin();
 			battle.drawBattleInstance();
 			batch.end();

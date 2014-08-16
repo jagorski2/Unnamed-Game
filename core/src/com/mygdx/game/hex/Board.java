@@ -152,7 +152,8 @@ public class Board {
 				}
 			}
 		}
-		tiles = null;
+		boardsTiles = null;
+		ready = true;
 	}
 	
 	private Point determineGridBounds() {

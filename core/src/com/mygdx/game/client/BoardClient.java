@@ -1,23 +1,24 @@
 package com.mygdx.game.client;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.badlogic.gdx.utils.JsonReader;
-import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.client.json.JsonClient;
-import com.mygdx.game.client.json.JsonUtil;
-import com.mygdx.game.client.json.ResponseCallback;
-import com.mygdx.game.client.json.exceptions.JsonClientException;
-import com.mygdx.game.client.json.models.BoardsTile;
 import com.mygdx.game.hex.Board;
 
-public class BoardClient {
+public class BoardClient implements Runnable {
 	
 	private static final String uri = "/tiles";
-	
-	public void getBoardFromServer(Board board) {
+	private final Board board;
+	public BoardClient(Board board) {
+		this.board = board;
+	}
+
+	@Override
+	public void run() {
+		JsonClient.getInstance().mySendRequest(board, uri);
 		
-	   JsonClient.getInstance().mySendRequest(board, "/tiles");
+		while (board.getBoardsTiles() == null) {
+			Thread.yield();
+		}
+		
+		board.initializeWithTiles();
 	}
 }

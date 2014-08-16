@@ -1,19 +1,20 @@
 package com.mygdx.game.hex;
-
 import java.util.List;
-
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
-import com.mygdx.game.client.json.models.Tile;
+import com.mygdx.game.client.json.models.BoardsTile;
+import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.play.Tile;
+import com.mygdx.game.play.Unit;
+import com.mygdx.game.utils.UnitTypeConstants;
 
 public class Board {
 
-	private Hexagon[][] hexagons;
-	
 	private boolean ready;				//used to determine whether or not the board is ready to play with
 	
+	private Tile[][] tiles;
 	private int width;
 	private int height;
 
@@ -23,7 +24,7 @@ public class Board {
 	private float pixelWidth;
 	private float pixelHeight;
 	
-	private List<Tile> tiles;
+	private List<BoardsTile> boardsTiles;
 
 	/**
 	 * 
@@ -68,7 +69,7 @@ public class Board {
 
 		float h = Math.CalculateH(side);
 		float r = Math.CalculateR(side);
-		hexagons = new Hexagon[width][height];
+		tiles = new Tile[width][height];
 
 		float xTranslate = 0;
 		float yTranslate = 0;
@@ -84,9 +85,26 @@ public class Board {
 				else
 					yTranslate = j * r;
 
-				hexagons[i][j] = new Hexagon(xOffset + xTranslate, yOffset
-						+ yTranslate, side);
+				tiles[i][j] = new Tile();
+				Hexagon hex = new Hexagon(xOffset + xTranslate, yOffset+ yTranslate, side);
+				tiles[i][j].setHexagon(hex);
+				if (i == 1 && j == 1 ){
+					tiles[i][j].setOccupied(true);
+					tiles[i][j].setUnit(new Unit(UnitTypeConstants.Warrior));
 
+				}
+				if (i == 1 && j == 2 ){
+					tiles[i][j].setOccupied(true);
+					tiles[i][j].setUnit(new Unit(UnitTypeConstants.Mage));
+
+				}
+				if (i == 1 && j == 3 ){
+					tiles[i][j].setOccupied(true);
+					tiles[i][j].setUnit(new Unit(UnitTypeConstants.Archer));
+
+				}
+				
+				
 			}
 		}
 		ready = true;
@@ -99,13 +117,13 @@ public class Board {
 		Point point = this.determineGridBounds();
 		width = (int) point.getX();
 		height = (int) point.getY();
-		hexagons = new Hexagon[width][height];
+		tiles = new Tile[width][height];
 
 		float xTranslate = 0;
 		float yTranslate = 0;
 		
-		for (int i = 0; i < tiles.size(); i ++) {
-			Tile tile = tiles.get(i);
+		for (int i = 0; i < boardsTiles.size(); i ++) {
+			BoardsTile tile = boardsTiles.get(i);
 			int x = tile.getX();
 			int y = tile.getY();
 			
@@ -118,15 +136,19 @@ public class Board {
 			else
 				yTranslate = y * r;
 			System.out.println(tile.toString());
-			Hexagon hex = new Hexagon(xOffset + xTranslate,yOffset + yTranslate , side);
-			hexagons[x][y] = hex;
+			tiles[x][y] = new Tile();
+			Hexagon hex = new Hexagon(xOffset + xTranslate, yOffset+ yTranslate, side);
+			tiles[x][y].setHexagon(hex);
 		}
 		
+		Tile tile = new Tile();
 		Hexagon hex = new Hexagon(0,0,2);
+		tile.setHexagon(hex);
+		
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
-				if (hexagons[i][j] == null) {
-					hexagons[i][j] = hex;
+				if (tiles[i][j] == null) {
+					tiles[i][j] = tile;
 				}
 			}
 		}
@@ -138,7 +160,7 @@ public class Board {
 		int greatestX = 0;
 		int greatestY = 0;
 		
-		for (Tile tile : tiles) {
+		for (BoardsTile tile : boardsTiles) {
 			if (tile.getX() > greatestX) {
 				greatestX = tile.getX();
 			}
@@ -150,22 +172,23 @@ public class Board {
 		return new Point(greatestX + 1, greatestY + 1);
 	}
 
-	public Hexagon closestHexagon(Vector3 vect) {
+	public Tile closestTile(Vector3 vect) {
 		float x = vect.x;
 		float y = vect.y;
 		Vector3 centerVect = new Vector3();
 		double closest = 999999999;
 		double dist;
-		Hexagon ret = null;
+		Tile ret = null;
 		for (int i = 0; i < getWidth(); i++) {
 			for (int j = 0; j < getHeight(); j++) {
 				Hexagon hex;
-				hex = getHexagons()[i][j];
-				centerVect.set(hex.getCenter().getX(), hex.getCenter().getY(),0);
+				hex = tiles[i][j].getHexagon();
+				centerVect.set(hex.getCenter().getX(), hex.getCenter().getY(),
+						0);
 				dist = Math.distance(x, centerVect.x, y, centerVect.y);
 				if (dist < closest) {
 					closest = dist;
-					ret = hex;
+					ret = tiles[i][j];
 				}
 
 			}
@@ -176,13 +199,21 @@ public class Board {
 	public void loadBoard(List<Tile> tiles) {
 		
 	}
-
-	public Hexagon[][] getHexagons() {
-		return hexagons;
+	
+	public boolean isReady() {
+		return ready;
 	}
 
-	public void setHexagons(Hexagon[][] hexagons) {
-		this.hexagons = hexagons;
+	public void setReady(boolean ready) {
+		this.ready = ready;
+	}
+
+	public Tile[][] getTiles() {
+		return tiles;
+	}
+
+	public void setTiles(Tile[][] tiles) {
+		this.tiles = tiles;
 	}
 
 	public int getWidth() {
@@ -241,19 +272,11 @@ public class Board {
 		this.pixelHeight = pixelHeight;
 	}
 
-	public boolean isReady() {
-		return ready;
+	public List<BoardsTile> getBoardsTiles() {
+		return boardsTiles;
 	}
 
-	public void setReady(boolean ready) {
-		this.ready = ready;
-	}
-
-	public List<Tile> getTiles() {
-		return tiles;
-	}
-
-	public void setTiles(List<Tile> tiles) {
-		this.tiles = tiles;
+	public void setBoardsTiles(List<BoardsTile> boardsTiles) {
+		this.boardsTiles = boardsTiles;
 	}
 }

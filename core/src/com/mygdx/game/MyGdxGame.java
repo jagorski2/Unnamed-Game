@@ -17,6 +17,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.client.BoardClient;
 import com.mygdx.game.client.BoardRunnable;
 import com.mygdx.game.client.json.models.User;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.hex.Board;
 import com.mygdx.game.play.BattleInstance;
 import com.mygdx.game.play.BattleInstancePlayer;
@@ -25,6 +27,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
 	 
 	public static PolygonSpriteBatch sprite_batch;
+	public static ShapeRenderer Project_Shape_Renderer;
 	public static TextureRegion textureGreen;
 	public static TextureRegion textureGrass;
 	public static float Vert_Array[][];
@@ -35,8 +38,13 @@ public class MyGdxGame extends ApplicationAdapter {
 	public static int hex_number = 0;
 	public static OrthographicCamera camera;
 	public static Vector3 touchPos;
+	public static Vector3 rightPos;
+	public static boolean unitIsSeclected;
+	public int ViewPortWidth;
+	public int ViewPortHeight;
 	BattleInstance battle;
 	ShaderProgram shader;
+ 
 	
 	
 	Board board;			//this is only instantiated when we get a response from the server
@@ -44,6 +52,12 @@ public class MyGdxGame extends ApplicationAdapter {
 	@Override
 	public void create () {
 		touchPos = new Vector3();
+		ViewPortWidth = 300;
+		ViewPortHeight = 300;
+		unitIsSeclected = false;
+		Project_Shape_Renderer = new ShapeRenderer();
+		touchPos = new Vector3();
+		rightPos = new Vector3();
 		sprite_batch = new PolygonSpriteBatch(50);
 		textureGreen = new TextureRegion(new Texture(Gdx.files.internal("textures/Green.png")),800,800);
 		textureGrass = new TextureRegion(new Texture(Gdx.files.internal("textures/Grass.jpg")),800,800);
@@ -56,15 +70,14 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		batch = new SpriteBatch();
 
-		Board b = new Board(-30, -30, 4, 8, 50);
+		Board b = new Board(-30, -30, 4, 8, 50 );
 	    camera = new OrthographicCamera();
-	    camera.setToOrtho(false, 200, 200);
+	    camera.setToOrtho(false, ViewPortWidth, ViewPortHeight);
 
 
 		List<BattleInstancePlayer> players = new ArrayList<BattleInstancePlayer>();
 		players.add(new BattleInstancePlayer());
 
-		
 		User user = new User();
         user.setId(1);
        
@@ -72,8 +85,6 @@ public class MyGdxGame extends ApplicationAdapter {
         board = new Board(-30,-30,50);
         boardClient.getBoardFromServer(board);
 		battle = new BattleInstance(board,players);		
-        
-     
 	}
 
 	@Override
@@ -81,9 +92,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		Gdx.gl.glClearColor(1, 1, 1, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.setProjectionMatrix(camera.combined);
-			
 		boardLoopLogic();
-
+		MyGdxGame.Project_Shape_Renderer.end();
 	}
 
 	private void boardLoopLogic() {

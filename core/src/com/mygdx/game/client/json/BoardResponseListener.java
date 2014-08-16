@@ -10,7 +10,7 @@ import com.badlogic.gdx.net.HttpStatus;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.JsonValue.JsonIterator;
-import com.mygdx.game.client.json.models.Tile;
+import com.mygdx.game.client.json.models.BoardsTile;
 import com.mygdx.game.hex.Board;
 
 public class BoardResponseListener implements HttpResponseListener{
@@ -31,14 +31,14 @@ public class BoardResponseListener implements HttpResponseListener{
          JsonValue jVal = jRead.parse(httpResponse.getResultAsString());
          JsonIterator jitr = jVal.iterator();
          
-         List<Tile> tiles = new LinkedList<Tile>();	//this will be passed to board at the end of this responseListener
+         List<BoardsTile> tiles = new LinkedList<BoardsTile>();	//this will be passed to board at the end of this responseListener
          
          while (jitr.hasNext()) {
         	 JsonValue val = jitr.next();
-        	 Tile tile = JsonUtil.getInstance().fromJson(Tile.class, val.toString());
+        	 BoardsTile tile = JsonUtil.getInstance().fromJson(BoardsTile.class, val.toString());
         	 tiles.add(tile);
          }
-         board.setTiles(tiles);
+         board.setBoardsTiles(tiles);
          
          /*
           * board.initalizeWithTiles()

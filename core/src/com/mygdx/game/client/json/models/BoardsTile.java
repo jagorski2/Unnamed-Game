@@ -1,6 +1,6 @@
 package com.mygdx.game.client.json.models;
 
-public class Tile {
+public class BoardsTile {
 	private int boardId;
 	private int x;
 	private int y;

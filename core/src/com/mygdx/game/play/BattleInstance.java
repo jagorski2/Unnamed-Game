@@ -7,7 +7,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.BoardScreen;
 import com.mygdx.game.hex.Board;
 import com.mygdx.game.hex.Hexagon;
 import com.mygdx.game.hex.HexagonBoardRenderer;
@@ -81,26 +81,26 @@ public class BattleInstance
 	public void drawBattleInstance() 
 	{
 		if(Gdx.input.isKeyPressed(Keys.W)){
-			MyGdxGame.camera.position.y +=5;
-			MyGdxGame.camera.update();
+			BoardScreen.camera.position.y +=5;
+			BoardScreen.camera.update();
 			
 		}
 		if(Gdx.input.isKeyPressed(Keys.A)){
-			MyGdxGame.camera.position.x -=5;
-			MyGdxGame.camera.update();
+			BoardScreen.camera.position.x -=5;
+			BoardScreen.camera.update();
 		}
 		if(Gdx.input.isKeyPressed(Keys.S)){
-			MyGdxGame.camera.position.y -=5;
-			MyGdxGame.camera.update();
+			BoardScreen.camera.position.y -=5;
+			BoardScreen.camera.update();
 		}
 		if(Gdx.input.isKeyPressed(Keys.D)){
-			MyGdxGame.camera.position.x +=5;
-			MyGdxGame.camera.update();
+			BoardScreen.camera.position.x +=5;
+			BoardScreen.camera.update();
 		}
-		MyGdxGame.touchPos.set(Gdx.input.getX(),Gdx.input.getY(),0);
-		MyGdxGame.camera.unproject(MyGdxGame.touchPos);
+		BoardScreen.touchPos.set(Gdx.input.getX(),Gdx.input.getY(),0);
+		BoardScreen.camera.unproject(BoardScreen.touchPos);
 		//MyGdxGame.touchPos.y = Constants.CAMERA_HEIGHT-MyGdxGame.touchPos.y;
-		focused_hex = board.closestHexagon(MyGdxGame.touchPos);
+		focused_hex = board.closestHexagon(BoardScreen.touchPos);
 		board_artist.drawBoard();
 
 		
@@ -124,7 +124,7 @@ public class BattleInstance
 	
 	{ 
 		ShapeRenderer r = new ShapeRenderer();
-		r.setProjectionMatrix(MyGdxGame.camera.combined);
+		r.setProjectionMatrix(BoardScreen.camera.combined);
 		r.setColor(Color.ORANGE);
 		r.begin(ShapeType.Line);
 		r.polygon(focused_hex.getVertices());

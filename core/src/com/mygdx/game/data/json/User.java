@@ -1,6 +1,4 @@
-package com.mygdx.game.client.json.models;
-
-import java.util.ArrayList;
+package com.mygdx.game.data.json;
 
 public class User {
 	

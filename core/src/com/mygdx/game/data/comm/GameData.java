@@ -37,4 +37,10 @@ public class GameData implements GameDataInterface {
 		return null;
 	}
 
+	@Override
+	public boolean moveUnit(int battleId, int unitId, int x, int y) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

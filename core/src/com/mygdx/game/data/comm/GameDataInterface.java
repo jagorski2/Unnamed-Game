@@ -12,5 +12,10 @@ public interface GameDataInterface {
 	public List<Board> getBoards(int playerId);
 	public User getUser(String playerId);
 	public List<Unit> getPlayerUnits(String playerId);
-
+	
+	/**
+	 * 
+	 * @return true upon successful gamestate change
+	 */
+	public boolean moveUnit(int battleId,int unitId,int x,int y);
 }

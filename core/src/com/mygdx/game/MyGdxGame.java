@@ -69,7 +69,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		batch = new SpriteBatch();
 
-		Board b = new Board(-30, -30, 4, 8, 50 );
+		//Board b = new Board(-30, -30, 4, 8, 50 );
 	    camera = new OrthographicCamera();
 	    camera.setToOrtho(false, ViewPortWidth, ViewPortHeight);
 
@@ -81,8 +81,7 @@ public class MyGdxGame extends ApplicationAdapter {
         user.setId(1);
        
         board = new Board(-30,-30,50);
-
-		battle = new BattleInstance(board,players);		
+       	battle = new BattleInstance(board,players);		
 		
         Thread boardInitialize = new Thread(new BoardClient(board));
         boardInitialize.start();

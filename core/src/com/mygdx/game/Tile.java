@@ -1,4 +1,4 @@
-package com.mygdx.game.play;
+package com.mygdx.game;
 
 import com.mygdx.game.hex.Hexagon;
 

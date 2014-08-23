@@ -1,4 +1,4 @@
-package com.mygdx.game.play;
+package com.mygdx.game;
 
 import java.util.List;
 
@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.utils.UnitTypeConstants;
 import com.mygdx.game.hex.Board;
 import com.mygdx.game.hex.Hexagon;
@@ -45,7 +44,6 @@ public class BattleInstance
 	
 	private List<BattleInstancePlayer> players;			//contains all the players that are involved in the battle instance.
 	private int turn;								//index in the players data structure to determine the turn.
-	private Tile[][] tiles;
 	
 	/**
 	 * There is no reason to have an instance of this class without a board and a list of players...
@@ -123,7 +121,7 @@ public class BattleInstance
 			}
 			MyGdxGame.rightPos.set(Gdx.input.getX(),Gdx.input.getY(),0);
 			MyGdxGame.camera.unproject(MyGdxGame.rightPos);
-			clicked_tile = board.closestTile(MyGdxGame.rightPos);
+			clicked_tile = board.getClosestTile(MyGdxGame.rightPos);
 			if(clicked_tile.isOccupied()){
 				selected_Unit = clicked_tile.getUnit();
 				selected_tile = clicked_tile;
@@ -171,12 +169,12 @@ public class BattleInstance
 
 	//@Deprecated
 	public void drawOccupiedTiles() {
-		tiles = board.getTiles();
 		for (int i = 0; i < board.getWidth(); i++) {
 			for (int j = 0; j < board.getHeight(); j++) {
-				if (tiles[i][j].isOccupied()) {
-					 Hexagon hex = tiles[i][j].getHexagon();
-					 Unit unit = tiles[i][j].getUnit();
+				Tile tile = board.getTile(i, j);
+				if (tile != null && tile.isOccupied()) {
+					 Hexagon hex = tile.getHexagon();
+					 Unit unit = tile.getUnit();
 					 unit.setHexagon(hex);
 					 unit.drawUnit();
 				}
@@ -192,7 +190,7 @@ public class BattleInstance
 
 	public void setFocusedTilesHexagon() 
 	{
-		this.focused_tile = board.closestTile(MyGdxGame.touchPos);
+		this.focused_tile = board.getClosestTile(MyGdxGame.touchPos);
 	}
 
 

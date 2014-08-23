@@ -13,14 +13,13 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.math.Vector3;
-import com.mygdx.game.client.board.BoardClient;
-import com.mygdx.game.client.json.models.User;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.data.comm.GameData;
+import com.mygdx.game.data.comm.GameDataInterface;
+import com.mygdx.game.data.comm.GameDataUtils;
+import com.mygdx.game.data.json.User;
 import com.mygdx.game.hex.Board;
-import com.mygdx.game.play.BattleInstance;
-import com.mygdx.game.play.BattleInstancePlayer;
 
 public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -68,8 +67,6 @@ public class MyGdxGame extends ApplicationAdapter {
 				5,2,0 };
 
 		batch = new SpriteBatch();
-
-		//Board b = new Board(-30, -30, 4, 8, 50 );
 	    camera = new OrthographicCamera();
 	    camera.setToOrtho(false, ViewPortWidth, ViewPortHeight);
 
@@ -77,14 +74,11 @@ public class MyGdxGame extends ApplicationAdapter {
 		List<BattleInstancePlayer> players = new ArrayList<BattleInstancePlayer>();
 		players.add(new BattleInstancePlayer());
 
-		User user = new User();
-        user.setId(1);
-       
-        board = new Board(-30,-30,50);
-       	battle = new BattleInstance(board,players);		
 		
-        Thread boardInitialize = new Thread(new BoardClient(board));
-        boardInitialize.start();
+	
+       	GameDataInterface gameData = GameDataUtils.getInstance();
+       	board = gameData.getBoard(1);
+       	battle = new BattleInstance(board,players);	
         
 	}
 

@@ -1,6 +1,5 @@
-package com.mygdx.game.client.json;
+package com.mygdx.game.data.json;
 
-import com.mygdx.game.client.json.exceptions.JsonClientException;
 
 
 public interface ResponseCallback<T> {

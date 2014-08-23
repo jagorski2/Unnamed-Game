@@ -1,8 +1,7 @@
-package com.mygdx.game.play;
+package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.hex.Hexagon;
 import com.mygdx.game.hex.Point;
 

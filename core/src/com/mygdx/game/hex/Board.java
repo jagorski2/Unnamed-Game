@@ -9,10 +9,10 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.client.json.models.BoardsTile;
+import com.mygdx.game.Tile;
+import com.mygdx.game.Unit;
+import com.mygdx.game.data.json.BoardsTile;
 import com.badlogic.gdx.math.Vector3;
-import com.mygdx.game.play.Tile;
-import com.mygdx.game.play.Unit;
 import com.mygdx.game.utils.UnitTypeConstants;
 
 public class Board {
@@ -201,7 +201,7 @@ public class Board {
 		return new Point(greatestX + 1, greatestY + 1);
 	}
 
-	public Tile closestTile(Vector3 vect) {
+	public Tile getClosestTile(Vector3 vect) {
 		float x = vect.x;
 		float y = vect.y;
 		Vector3 centerVect = new Vector3();
@@ -336,5 +336,16 @@ public class Board {
 
 	public void setBoardsTiles(List<BoardsTile> boardsTiles) {
 		this.boardsTiles = boardsTiles;
+	}
+	public Tile getTile(int x,int y) {
+		Tile tile = null;
+		if (x >= tiles.length) {
+			return tile;
+		}
+		if (y >= tiles[0].length) {
+			return tile;
+		}
+		tile = tiles[x][y];
+		return tile;
 	}
 }

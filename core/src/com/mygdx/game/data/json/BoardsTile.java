@@ -1,4 +1,4 @@
-package com.mygdx.game.client.json.models;
+package com.mygdx.game.data.json;
 
 public class BoardsTile {
 	private int boardId;

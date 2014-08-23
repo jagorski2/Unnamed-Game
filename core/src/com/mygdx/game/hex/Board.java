@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
-import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.BoardScreen;
 import com.mygdx.game.Tile;
 import com.mygdx.game.Unit;
 import com.mygdx.game.data.json.BoardsTile;
@@ -141,7 +141,6 @@ public class Board {
 			else
 				yTranslate = y * r;
 			
-			System.out.println(tile.toString());
 			tiles[x][y] = new Tile();
 			Hexagon hex = new Hexagon(xOffset + xTranslate, yOffset+ yTranslate, side);
 			tiles[x][y].setHexagon(hex);
@@ -228,15 +227,15 @@ public class Board {
 	public void drawBoard() {
 
 		/* Line Drawing Inits */
-		MyGdxGame.Project_Shape_Renderer.setProjectionMatrix(MyGdxGame.camera.combined);
-		MyGdxGame.Project_Shape_Renderer.setColor(Color.BLACK);
+		BoardScreen.project_shape_renderer.setProjectionMatrix(BoardScreen.camera.combined);
+		BoardScreen.project_shape_renderer.setColor(Color.BLACK);
 
 		/* Hexagon inits */
 		// TextureRegion textureGreen; = new TextureRegion(new Texture
 		// Gdx.files.internal("textures/grass.jpg")), 800, 800);
 
 
-		MyGdxGame.sprite_batch.setProjectionMatrix(MyGdxGame.camera.combined);
+		BoardScreen.sprite_batch.setProjectionMatrix(BoardScreen.camera.combined);
 
 		/* Loop through and add hexagons as well as the outline */
 		for (int i = 0; i < this.getWidth(); i++) {
@@ -246,14 +245,14 @@ public class Board {
 
 				/* Generate the Polygon Region */
 				PolygonRegion polyReg = new PolygonRegion(
-						MyGdxGame.textureGreen, hex.getVertices(),
-						MyGdxGame.triangles);
-				MyGdxGame.sprite_batch.begin();
-				MyGdxGame.sprite_batch.draw(polyReg, 0, 0);
-				MyGdxGame.sprite_batch.end();
-				MyGdxGame.Project_Shape_Renderer.begin(ShapeType.Line);
-				MyGdxGame.Project_Shape_Renderer.polygon(hex.getVertices());
-				MyGdxGame.Project_Shape_Renderer.end();
+						BoardScreen.textureGreen, hex.getVertices(),
+						BoardScreen.triangles);
+				BoardScreen.sprite_batch.begin();
+				BoardScreen.sprite_batch.draw(polyReg, 0, 0);
+				BoardScreen.sprite_batch.end();
+				BoardScreen.project_shape_renderer.begin(ShapeType.Line);
+				BoardScreen.project_shape_renderer.polygon(hex.getVertices());
+				BoardScreen.project_shape_renderer.end();
 			}
 		}
 	}
@@ -264,14 +263,6 @@ public class Board {
 
 	public void setReady(boolean ready) {
 		this.ready = ready;
-	}
-
-	public Tile[][] getTiles() {
-		return tiles;
-	}
-
-	public void setTiles(Tile[][] tiles) {
-		this.tiles = tiles;
 	}
 
 	public int getWidth() {

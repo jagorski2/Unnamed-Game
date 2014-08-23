@@ -81,58 +81,58 @@ public class BattleInstance
 	public void drawBattleInstance() 
 	{
 		if((Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP))){// && MyGdxGame.camera.position.y < 300)){
-			MyGdxGame.camera.position.y +=5;
-			MyGdxGame.camera.update();
+			BoardScreen.camera.position.y +=5;
+			BoardScreen.camera.update();
 			
 		}
 		if((Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT))){// && MyGdxGame.camera.position.x > 300){
-			MyGdxGame.camera.position.x -=5;
-			MyGdxGame.camera.update();
+			BoardScreen.camera.position.x -=5;
+			BoardScreen.camera.update();
 		}
 		if((Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN))){
-			MyGdxGame.camera.position.y -=5;
-			MyGdxGame.camera.update();
+			BoardScreen.camera.position.y -=5;
+			BoardScreen.camera.update();
 		}
 		if((Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))){
-			MyGdxGame.camera.position.x +=5;
-			MyGdxGame.camera.update();
+			BoardScreen.camera.position.x +=5;
+			BoardScreen.camera.update();
 		}
 		if(Gdx.input.isKeyPressed(Keys.Z)){
-			MyGdxGame.camera.viewportHeight +=20;
-			MyGdxGame.camera.viewportWidth +=20;
-			MyGdxGame.camera.update();
+			BoardScreen.camera.viewportHeight +=20;
+			BoardScreen.camera.viewportWidth +=20;
+			BoardScreen.camera.update();
 		}
 		if(Gdx.input.isKeyPressed(Keys.X)){
-			MyGdxGame.camera.viewportHeight -=20;
-			MyGdxGame.camera.viewportWidth -=20;
-			MyGdxGame.camera.update();
+			BoardScreen.camera.viewportHeight -=20;
+			BoardScreen.camera.viewportWidth -=20;
+			BoardScreen.camera.update();
 		}
 		
 		
 		
-		MyGdxGame.touchPos.set(Gdx.input.getX(),Gdx.input.getY(),0);
-		MyGdxGame.camera.unproject(MyGdxGame.touchPos);
+		BoardScreen.touchPos.set(Gdx.input.getX(),Gdx.input.getY(),0);
+		BoardScreen.camera.unproject(BoardScreen.touchPos);
 
 		setFocusedTilesHexagon();
 		Tile clicked_tile = null;
 		if (Gdx.input.justTouched()) {
 			if(clicked_tile == selected_tile){
-				MyGdxGame.unitIsSelected = false;
+				BoardScreen.unitIsSelected = false;
 			}
-			MyGdxGame.rightPos.set(Gdx.input.getX(),Gdx.input.getY(),0);
-			MyGdxGame.camera.unproject(MyGdxGame.rightPos);
-			clicked_tile = board.getClosestTile(MyGdxGame.rightPos);
-			if(clicked_tile.isOccupied()){
+			BoardScreen.rightPos.set(Gdx.input.getX(),Gdx.input.getY(),0);
+			BoardScreen.camera.unproject(BoardScreen.rightPos);
+			clicked_tile = board.getClosestTile(BoardScreen.rightPos);
+			if(clicked_tile != null && clicked_tile.isOccupied()){
 				selected_Unit = clicked_tile.getUnit();
 				selected_tile = clicked_tile;
-				MyGdxGame.unitIsSelected = true;
+				BoardScreen.unitIsSelected = true;
 				
-			}else if(!clicked_tile.isOccupied() && MyGdxGame.unitIsSelected){
+			}else if(clicked_tile != null && !clicked_tile.isOccupied() && BoardScreen.unitIsSelected){
 				
 					clicked_tile.setUnit(selected_Unit);
 					clicked_tile.setOccupied(true);
 					selected_tile.setOccupied(false);
-					MyGdxGame.unitIsSelected = false;					
+					BoardScreen.unitIsSelected = false;					
 				
 			}
 		}
@@ -158,13 +158,13 @@ public class BattleInstance
 	public void drawFocusedHexagon() 
 	{
 
-		MyGdxGame.Project_Shape_Renderer
-				.setProjectionMatrix(MyGdxGame.camera.combined);
-		MyGdxGame.Project_Shape_Renderer.setColor(Color.ORANGE);
-		MyGdxGame.Project_Shape_Renderer.begin(ShapeType.Line);
-		MyGdxGame.Project_Shape_Renderer.polygon(getFocusedTilesHexagon()
+		BoardScreen.project_shape_renderer
+				.setProjectionMatrix(BoardScreen.camera.combined);
+		BoardScreen.project_shape_renderer.setColor(Color.ORANGE);
+		BoardScreen.project_shape_renderer.begin(ShapeType.Line);
+		BoardScreen.project_shape_renderer.polygon(getFocusedTilesHexagon()
 				.getVertices());
-		MyGdxGame.Project_Shape_Renderer.end();
+		BoardScreen.project_shape_renderer.end();
 	}
 
 	//@Deprecated
@@ -179,7 +179,7 @@ public class BattleInstance
 					 unit.drawUnit();
 				}
 			}
-		MyGdxGame.Project_Shape_Renderer.setColor(Color.BLACK);
+		BoardScreen.project_shape_renderer.setColor(Color.BLACK);
 		}
 	}
 
@@ -190,7 +190,7 @@ public class BattleInstance
 
 	public void setFocusedTilesHexagon() 
 	{
-		this.focused_tile = board.getClosestTile(MyGdxGame.touchPos);
+		this.focused_tile = board.getClosestTile(BoardScreen.touchPos);
 	}
 
 

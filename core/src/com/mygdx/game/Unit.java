@@ -70,10 +70,10 @@ public class Unit
 	 */
 	public void drawUnit() 
 	{
-		MyGdxGame.Project_Shape_Renderer.setColor(color);
-		MyGdxGame.Project_Shape_Renderer.begin(ShapeType.Line);
-		MyGdxGame.Project_Shape_Renderer.polygon(hexagon.getVertices());
-		MyGdxGame.Project_Shape_Renderer.end();
+		BoardScreen.project_shape_renderer.setColor(color);
+		BoardScreen.project_shape_renderer.begin(ShapeType.Line);
+		BoardScreen.project_shape_renderer.polygon(hexagon.getVertices());
+		BoardScreen.project_shape_renderer.end();
 	}
 
 

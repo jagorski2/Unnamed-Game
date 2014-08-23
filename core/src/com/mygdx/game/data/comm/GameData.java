@@ -11,7 +11,7 @@ public class GameData implements GameDataInterface {
 
 	@Override
 	public Board getBoard(int id) {
-		Board board = new Board(-30,-30,50);
+		Board board = new Board(-30,-30,40);
        
 		Thread boardInitialize = new Thread(new BoardClient(board));
         boardInitialize.start();

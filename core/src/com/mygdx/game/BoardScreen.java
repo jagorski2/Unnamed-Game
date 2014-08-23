@@ -3,57 +3,44 @@ package com.mygdx.game;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
-import com.mygdx.game.data.comm.GameData;
 import com.mygdx.game.data.comm.GameDataInterface;
 import com.mygdx.game.data.comm.GameDataUtils;
-import com.mygdx.game.data.json.User;
 import com.mygdx.game.hex.Board;
+import com.mygdx.game.screens.MainMenuScreen;
 
-public class MyGdxGame extends ApplicationAdapter {
+public class BoardScreen implements Screen{
 	SpriteBatch batch;
 	 
+	private MyGame game;
+	public static ShapeRenderer project_shape_renderer;
 	public static PolygonSpriteBatch sprite_batch;
-	public static ShapeRenderer Project_Shape_Renderer;
 	public static TextureRegion textureGreen;
 	public static TextureRegion textureGrass;
-	public static float Vert_Array[][];
-	public static float hex_center[][];
 	public static short triangles[];
-	public static float[] Current_Hexagon;
-	public static PolygonRegion polyReg;
+	public static float[] current_hexagon;
 	public static int hex_number = 0;
 	public static OrthographicCamera camera;
 	public static Vector3 touchPos;
 	public static Vector3 rightPos;
-	public static boolean unitIsSelected;
-	public int ViewPortWidth;
-	public int ViewPortHeight;
 	BattleInstance battle;
 	ShaderProgram shader;
- 
+	public static boolean unitIsSelected = false;
+	private int viewPortWidth = 300;
+	private int viewPortHeight = 300;
 	
-	
-	Board board;			//this is only instantiated when we get a response from the server
-	
-	@Override
-	public void create () {
-		touchPos = new Vector3();
-		ViewPortWidth = 300;
-		ViewPortHeight = 300;
-		unitIsSelected = false;
-		Project_Shape_Renderer = new ShapeRenderer();
+	public BoardScreen(MyGame game) {
+		this.game = game;
 		touchPos = new Vector3();
 		rightPos = new Vector3();
 		sprite_batch = new PolygonSpriteBatch(50);
@@ -67,35 +54,74 @@ public class MyGdxGame extends ApplicationAdapter {
 				5,2,0 };
 
 		batch = new SpriteBatch();
+		project_shape_renderer = new ShapeRenderer();
 	    camera = new OrthographicCamera();
-	    camera.setToOrtho(false, ViewPortWidth, ViewPortHeight);
-
+	    camera.setToOrtho(false, viewPortWidth, viewPortHeight);
 
 		List<BattleInstancePlayer> players = new ArrayList<BattleInstancePlayer>();
-		players.add(new BattleInstancePlayer());
-
-		
+		players.add(new BattleInstancePlayer());	
+		GameDataInterface gameData = GameDataUtils.getInstance();
+		Board board = gameData.getBoard(1);
+		battle = new BattleInstance(board,players);
+	}
 	
-       	GameDataInterface gameData = GameDataUtils.getInstance();
-       	board = gameData.getBoard(1);
-       	battle = new BattleInstance(board,players);	
-        
+
+	public MyGame getGame() {
+		return game;
+	}
+
+	public void setGame(MyGame game) {
+		this.game = game;
 	}
 
 	@Override
-	public void render () {		
+	public void render(float delta) {
 		Gdx.gl.glClearColor(1, 1, 1, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.setProjectionMatrix(camera.combined);
-		boardLoopLogic();
-		MyGdxGame.Project_Shape_Renderer.end();
-	}
-
-	private void boardLoopLogic() {
-		if (board.isReady()) {
+		if (battle.getBoard().isReady()) {
 			batch.begin();
 			battle.drawBattleInstance();
 			batch.end();
 		}
+		project_shape_renderer.end();
 	}
+
+	@Override
+	public void resize(int width, int height) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void show() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void hide() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void resume() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 }

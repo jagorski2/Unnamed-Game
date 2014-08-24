@@ -3,14 +3,14 @@ package com.mygdx.game.data.json;
 public class User {
 	
 	private int id;
-	private String userid;
+	private String userName;
 	private String password;
 	
-	public String getUserid() {
-		return userid;
+	public String getUserName() {
+		return userName;
 	}
-	public void setUserid(String userid) {
-		this.userid = userid;
+	public void setUserName(String userid) {
+		this.userName = userid;
 	}
 	public String getPassword() {
 		return password;
@@ -20,7 +20,7 @@ public class User {
 	}
 	
 	public String toString() {
-		return "User [" + this.id + ":" + this.userid + ":" + this.password + "]";
+		return "User [" + this.id + ":" + this.userName + ":" + this.password + "]";
 	}
 	public int getId() {
 		return id;

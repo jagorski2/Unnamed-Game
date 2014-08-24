@@ -116,6 +116,8 @@ public class BattleInstance
 		setFocusedTilesHexagon();
 		Tile clicked_tile = null;
 		if (Gdx.input.justTouched()) {
+			if (focused_tile != null)
+				System.out.println((int)focused_tile.getHexagon().getX() + " : " + (int)focused_tile.getHexagon().getY());
 			if(clicked_tile == selected_tile){
 				BoardScreen.unitIsSelected = false;
 			}
@@ -191,6 +193,7 @@ public class BattleInstance
 	public void setFocusedTilesHexagon() 
 	{
 		this.focused_tile = board.getClosestTile(BoardScreen.touchPos);
+		
 	}
 
 

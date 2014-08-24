@@ -7,7 +7,7 @@ import com.mygdx.game.data.client.BoardClient;
 import com.mygdx.game.data.json.User;
 import com.mygdx.game.hex.Board;
 
-public class GameData implements GameDataInterface {
+public class RealGameData implements GameDataInterface {
 
 	@Override
 	public Board getBoard(int id) {
@@ -35,6 +35,12 @@ public class GameData implements GameDataInterface {
 	public List<Unit> getPlayerUnits(String playerId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean moveUnit(int battleId, int unitId, int x, int y) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

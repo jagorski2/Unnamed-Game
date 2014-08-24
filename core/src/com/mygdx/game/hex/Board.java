@@ -30,26 +30,6 @@ public class Board {
 	private float pixelHeight;
 	
 	private List<BoardsTile> boardsTiles;
-
-	/**
-	 * 
-	 * 0 1
-	 * 
-	 * 5 2
-	 * 
-	 * 4 3
-	 * 
-	 * Point 0 -> (x, y)
-	 * 
-	 */
-	public Board(int xOffset, int yOffset, int width, int height, int side) {
-		this.width = width;
-		this.height = height;
-		this.side = side;
-		this.xOffset = xOffset + side;
-		this.yOffset = yOffset + side;
-		this.initialize();
-	}
 	
 	public Board(int xOffset, int yOffset, int side) {
 		this.side = side;
@@ -57,65 +37,8 @@ public class Board {
 		this.yOffset = yOffset + side;
 		ready = false;
 	}
-
-	/**
-	 * 
-	 * @param width
-	 *            size of one edge of a hexagon
-	 * @param height
-	 *            in hexagons
-	 * @param side
-	 *            in hexagons
-	 */
-	/**
-     * 
-     */
-	private void initialize() {
-
-		float h = Math.CalculateH(side);
-		float r = Math.CalculateR(side);
-		tiles = new Tile[width][height];
-
-		float xTranslate = 0;
-		float yTranslate = 0;
-		
-		for (int i = 0; i < width; i++) {
-			for (int j = 0; j < height; j++) {
-				if (j % 2 == 1)
-					xTranslate = i * (side * 2 + h * 2);
-				else
-					xTranslate = i * (side * 2 + h * 2) + side + h;
-				if (i % 2 == 0)
-					yTranslate = j * r;
-				else
-					yTranslate = j * r;
-
-				tiles[i][j] = new Tile();
-				Hexagon hex = new Hexagon(xOffset + xTranslate, yOffset+ yTranslate, side);
-				tiles[i][j].setHexagon(hex);
-				if (i == 1 && j == 1 ){
-					tiles[i][j].setOccupied(true);
-					tiles[i][j].setUnit(new Unit(UnitTypeConstants.WARRIOR));
-
-				}
-				if (i == 1 && j == 2 ){
-					tiles[i][j].setOccupied(true);
-					tiles[i][j].setUnit(new Unit(UnitTypeConstants.MAGE));
-
-				}
-				if (i == 1 && j == 3 ){
-					tiles[i][j].setOccupied(true);
-					tiles[i][j].setUnit(new Unit(UnitTypeConstants.ARCHER));
-
-				}
-				
-				
-			}
-		}
-		ready = true;
-	}
 	
-	public void initializeWithTiles() {
+	public void initialize() {
 		float h = Math.CalculateH(side);
 		float r = Math.CalculateR(side);
 		
@@ -128,23 +51,24 @@ public class Board {
 		float yTranslate = 0;
 		
 		for (int i = 0; i < boardsTiles.size(); i ++) {
+			
 			BoardsTile tile = boardsTiles.get(i);
+			
 			int x = tile.getX();
 			int y = tile.getY();
 			
-			if (y % 2 == 1)
-				xTranslate = x * (side * 2 + h * 2);
-			else
-				xTranslate = x * (side * 2 + h * 2) + side + h;
-			if (x % 2 == 0)
-				yTranslate = y * r;
-			else
-				yTranslate = y * r;
+			yTranslate = y * (r * 2);
+			xTranslate = x * (side + h);
+			if (x % 2 == 1) {
+				yTranslate += r;
+			}
+			
 			
 			tiles[x][y] = new Tile();
 			Hexagon hex = new Hexagon(xOffset + xTranslate, yOffset+ yTranslate, side);
 			tiles[x][y].setHexagon(hex);
 			tiles[x][y].setType(tile.getType());
+			
 			Unit unit = null;
 			
 			if (x == 1 && y == 1 ){
@@ -217,6 +141,7 @@ public class Board {
 				if (dist < closest) {
 					closest = dist;
 					ret = tiles[i][j];
+					//System.out.println(i + " : " + j);
 				}
 
 			}
@@ -244,6 +169,7 @@ public class Board {
 				Hexagon hex = tile.getHexagon();
 
 				/* Generate the Polygon Region */
+				
 				PolygonRegion polyReg = new PolygonRegion(
 						BoardScreen.textureGreen, hex.getVertices(),
 						BoardScreen.triangles);
@@ -328,6 +254,13 @@ public class Board {
 	public void setBoardsTiles(List<BoardsTile> boardsTiles) {
 		this.boardsTiles = boardsTiles;
 	}
+	
+	/**
+	 * Use this method to expose a tile, do not use the array of tiles
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	public Tile getTile(int x,int y) {
 		Tile tile = null;
 		if (x >= tiles.length) {

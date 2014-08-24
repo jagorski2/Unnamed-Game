@@ -65,15 +65,6 @@ public class BoardScreen implements Screen{
 		battle = new BattleInstance(board,players);
 	}
 	
-
-	public MyGame getGame() {
-		return game;
-	}
-
-	public void setGame(MyGame game) {
-		this.game = game;
-	}
-
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(1, 1, 1, 0);

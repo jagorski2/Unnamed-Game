@@ -17,7 +17,7 @@ public class Hexagon {
 		this.side = side;
 		this.CalculateVertices();
 	}
-
+	
 	private void CalculateVertices() {
 		this.h = Math.CalculateH(side);
 		this.r = Math.CalculateR(side);

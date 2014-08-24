@@ -30,26 +30,6 @@ public class Board {
 	private float pixelHeight;
 	
 	private List<BoardsTile> boardsTiles;
-
-	/**
-	 * 
-	 * 0 1
-	 * 
-	 * 5 2
-	 * 
-	 * 4 3
-	 * 
-	 * Point 0 -> (x, y)
-	 * 
-	 */
-	public Board(int xOffset, int yOffset, int width, int height, int side) {
-		this.width = width;
-		this.height = height;
-		this.side = side;
-		this.xOffset = xOffset + side;
-		this.yOffset = yOffset + side;
-		this.initialize();
-	}
 	
 	public Board(int xOffset, int yOffset, int side) {
 		this.side = side;

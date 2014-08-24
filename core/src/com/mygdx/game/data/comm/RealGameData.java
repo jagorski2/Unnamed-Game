@@ -7,7 +7,7 @@ import com.mygdx.game.data.client.BoardClient;
 import com.mygdx.game.data.json.User;
 import com.mygdx.game.hex.Board;
 
-public class GameData implements GameDataInterface {
+public class RealGameData implements GameDataInterface {
 
 	@Override
 	public Board getBoard(int id) {

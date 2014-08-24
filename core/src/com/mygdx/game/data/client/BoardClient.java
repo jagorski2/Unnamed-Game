@@ -36,7 +36,7 @@ public class BoardClient implements Runnable {
 					
 				}
 				board.setBoardsTiles(tiles);
-				board.initializeWithTiles();
+				board.initialize();
 			}
 
 			@Override

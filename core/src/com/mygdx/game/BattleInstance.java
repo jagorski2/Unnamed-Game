@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import java.util.List;
 
+import com.app.models.Instance;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Buttons;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.screens.BoardScreen;
 import com.mygdx.game.utils.UnitTypeConstants;
 import com.mygdx.game.hex.Board;
 import com.mygdx.game.hex.Hexagon;
@@ -27,32 +29,24 @@ public class BattleInstance
 {
 	
 
-
-	public List<BattleInstancePlayer> getPlayers() {
-		return players;
-	}
-
-	public void setPlayers(List<BattleInstancePlayer> players) {
-		this.players = players;
-	}
-	
-
 	private Board board;								//the board that the battle instance will take place on.
-	private Tile focused_tile; 						//this is the current focus on the player on the screen, it will be highlighted
-	private Tile selected_tile;
-	private Unit selected_Unit;
+	private InstanceTile focused_tile; 						//this is the current focus on the player on the screen, it will be highlighted
+	private InstanceTile selected_tile;
+	private InstanceUnit selected_Unit;
+	private Instance instanceBean;					//comes from the database
 	
 	private List<BattleInstancePlayer> players;			//contains all the players that are involved in the battle instance.
+	private List<InstanceUnit> units;
 	private int turn;								//index in the players data structure to determine the turn.
 	
 	/**
 	 * There is no reason to have an instance of this class without a board and a list of players...
 	 * 
 	 */
-	public BattleInstance(Board board, List<BattleInstancePlayer> players) 
+	public BattleInstance(Board board, Instance instanceBean) 
 	{
 		this.board = board;
-		this.players = players;
+		this.instanceBean = instanceBean;
 	}
 	
 	public Board getBoard()
@@ -114,7 +108,7 @@ public class BattleInstance
 		BoardScreen.camera.unproject(BoardScreen.touchPos);
 
 		setFocusedTilesHexagon();
-		Tile clicked_tile = null;
+		InstanceTile clicked_tile = null;
 		if (Gdx.input.justTouched()) {
 			if (focused_tile != null)
 				System.out.println((int)focused_tile.getHexagon().getX() + " : " + (int)focused_tile.getHexagon().getY());
@@ -140,11 +134,13 @@ public class BattleInstance
 		}
 
 		board.drawBoard();
+		
+		/*
 		for (BattleInstancePlayer player : players)
 		{
 			player.drawAllUnits();
 		}
-		
+		*/
 		if (this.focused_tile != null) 
 		{
 			this.drawFocusedHexagon();
@@ -173,10 +169,10 @@ public class BattleInstance
 	public void drawOccupiedTiles() {
 		for (int i = 0; i < board.getWidth(); i++) {
 			for (int j = 0; j < board.getHeight(); j++) {
-				Tile tile = board.getTile(i, j);
+				InstanceTile tile = board.getTile(i, j);
 				if (tile != null && tile.isOccupied()) {
 					 Hexagon hex = tile.getHexagon();
-					 Unit unit = tile.getUnit();
+					 InstanceUnit unit = tile.getUnit();
 					 unit.setHexagon(hex);
 					 unit.drawUnit();
 				}
@@ -194,6 +190,22 @@ public class BattleInstance
 	{
 		this.focused_tile = board.getClosestTile(BoardScreen.touchPos);
 		
+	}
+
+	public List<InstanceUnit> getUnits() {
+		return units;
+	}
+
+	public void setUnits(List<InstanceUnit> units) {
+		this.units = units;
+	}
+
+	public Instance getInstanceBean() {
+		return instanceBean;
+	}
+
+	public void setInstanceBean(Instance instanceBean) {
+		this.instanceBean = instanceBean;
 	}
 
 

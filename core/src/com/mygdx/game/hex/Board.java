@@ -1,25 +1,19 @@
 package com.mygdx.game.hex;
 import java.util.List;
 
+import com.app.models.Tile;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonReader;
-import com.badlogic.gdx.utils.JsonValue;
-import com.mygdx.game.BoardScreen;
-import com.mygdx.game.Tile;
-import com.mygdx.game.Unit;
-import com.mygdx.game.data.json.BoardsTile;
-import com.badlogic.gdx.math.Vector3;
-import com.mygdx.game.utils.UnitTypeConstants;
+import com.mygdx.game.InstanceTile;
+import com.mygdx.game.screens.BoardScreen;
 
 public class Board {
 
 	private boolean ready;				//used to determine whether or not the board is ready to play with
 	
-	private Tile[][] tiles;
+	private InstanceTile[][] tiles;
 	private int width;
 	private int height;
 
@@ -27,9 +21,10 @@ public class Board {
 	private int yOffset;
 	private int side;
 	private float pixelWidth;
+
 	private float pixelHeight;
 	
-	private List<BoardsTile> boardsTiles;
+	private List<Tile> tileBeans;
 	
 	public Board(int xOffset, int yOffset, int side) {
 		this.side = side;
@@ -45,14 +40,14 @@ public class Board {
 		Point point = this.determineGridBounds();
 		width = (int) point.getX();
 		height = (int) point.getY();
-		tiles = new Tile[width][height];
+		tiles = new InstanceTile[width][height];
 
 		float xTranslate = 0;
 		float yTranslate = 0;
 		
-		for (int i = 0; i < boardsTiles.size(); i ++) {
+		for (int i = 0; i < tileBeans.size(); i ++) {
 			
-			BoardsTile tile = boardsTiles.get(i);
+			Tile tile = tileBeans.get(i);
 			
 			int x = tile.getX();
 			int y = tile.getY();
@@ -63,39 +58,14 @@ public class Board {
 				yTranslate += r;
 			}
 			
-			
-			tiles[x][y] = new Tile();
 			Hexagon hex = new Hexagon(xOffset + xTranslate, yOffset+ yTranslate, side);
-			tiles[x][y].setHexagon(hex);
-			tiles[x][y].setType(tile.getType());
-			
-			Unit unit = null;
-			
-			if (x == 1 && y == 1 ){
-				tiles[x][y].setOccupied(true);
-				unit = new Unit(UnitTypeConstants.WARRIOR);
-				unit.setColor(Color.RED);
-				unit.setHexagon(tiles[x][y].getHexagon());
-			}
-			else if (x == 1 && y == 2 ){
-				tiles[x][y].setOccupied(true);
-				unit = new Unit(UnitTypeConstants.MAGE);
-				unit.setColor(Color.BLUE);
-				unit.setHexagon(tiles[x][y].getHexagon());
-			}
-			else if (x == 1 && y == 3 ){
-				tiles[x][y].setOccupied(true);
-				unit = new Unit(UnitTypeConstants.ARCHER);
-				unit.setColor(Color.GREEN);
-				unit.setHexagon(tiles[x][y].getHexagon());
-			}
-			tiles[x][y].setUnit(unit);
+			InstanceTile instanceTile = new InstanceTile(hex);
+			instanceTile.setType(tile.getType());
+			tiles[x][y] = instanceTile;
 		}
-		
-		Tile tile = new Tile();
-		tile.setType(10);
 		Hexagon hex = new Hexagon(0,0,2);
-		tile.setHexagon(hex);
+		InstanceTile tile = new InstanceTile(hex);
+		tile.setType(10);
 		
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
@@ -104,7 +74,7 @@ public class Board {
 				}
 			}
 		}
-		boardsTiles = null;
+		tileBeans = null;
 		ready = true;
 	}
 	
@@ -112,7 +82,7 @@ public class Board {
 		int greatestX = 0;
 		int greatestY = 0;
 		
-		for (BoardsTile tile : boardsTiles) {
+		for (Tile tile : tileBeans) {
 			if (tile.getX() > greatestX) {
 				greatestX = tile.getX();
 			}
@@ -124,13 +94,13 @@ public class Board {
 		return new Point(greatestX + 1, greatestY + 1);
 	}
 
-	public Tile getClosestTile(Vector3 vect) {
+	public InstanceTile getClosestTile(Vector3 vect) {
 		float x = vect.x;
 		float y = vect.y;
 		Vector3 centerVect = new Vector3();
 		double closest = 999999999;
 		double dist;
-		Tile ret = null;
+		InstanceTile ret = null;
 		for (int i = 0; i < getWidth(); i++) {
 			for (int j = 0; j < getHeight(); j++) {
 				Hexagon hex;
@@ -165,7 +135,7 @@ public class Board {
 		/* Loop through and add hexagons as well as the outline */
 		for (int i = 0; i < this.getWidth(); i++) {
 			for (int j = 0; j < this.getHeight(); j++) {
-				Tile tile = tiles[i][j];
+				InstanceTile tile = tiles[i][j];
 				Hexagon hex = tile.getHexagon();
 
 				/* Generate the Polygon Region */
@@ -246,14 +216,6 @@ public class Board {
 	public void setPixelHeight(float pixelHeight) {
 		this.pixelHeight = pixelHeight;
 	}
-
-	public List<BoardsTile> getBoardsTiles() {
-		return boardsTiles;
-	}
-
-	public void setBoardsTiles(List<BoardsTile> boardsTiles) {
-		this.boardsTiles = boardsTiles;
-	}
 	
 	/**
 	 * Use this method to expose a tile, do not use the array of tiles
@@ -261,8 +223,8 @@ public class Board {
 	 * @param y
 	 * @return
 	 */
-	public Tile getTile(int x,int y) {
-		Tile tile = null;
+	public InstanceTile getTile(int x,int y) {
+		InstanceTile tile = null;
 		if (x >= tiles.length) {
 			return tile;
 		}
@@ -271,5 +233,13 @@ public class Board {
 		}
 		tile = tiles[x][y];
 		return tile;
+	}
+	
+	public List<Tile> getTileBeans() {
+		return tileBeans;
+	}
+
+	public void setTileBeans(List<Tile> tileBeans) {
+		this.tileBeans = tileBeans;
 	}
 }

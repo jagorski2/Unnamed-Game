@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
+import com.mygdx.game.screens.BoardScreen;
 import com.mygdx.game.screens.MainMenuScreen;
 
 public class MyGame extends Game {

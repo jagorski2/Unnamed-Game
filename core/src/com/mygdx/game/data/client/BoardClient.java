@@ -3,10 +3,8 @@ package com.mygdx.game.data.client;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.badlogic.gdx.utils.JsonReader;
+import com.app.models.Tile;
 import com.badlogic.gdx.utils.JsonValue;
-import com.badlogic.gdx.utils.JsonValue.JsonIterator;
-import com.mygdx.game.data.json.BoardsTile;
 import com.mygdx.game.data.json.JsonClient;
 import com.mygdx.game.data.json.JsonClientException;
 import com.mygdx.game.data.json.JsonUtil;
@@ -27,15 +25,24 @@ public class BoardClient implements Runnable {
 			@Override
 			public void onResponse(Object returnObject) {
 				List<JsonValue> list = (List)returnObject;
-				List<BoardsTile> tiles = new LinkedList<BoardsTile>();
+				List<Tile> tiles = new LinkedList<Tile>();
 				JsonUtil util = JsonUtil.getInstance();
+				
+				
+				/**
+				 * get each JsonValue and convert to a Tile
+				 */
 				for (JsonValue value : list) {
 					//value = (JsonValue)value;
-					BoardsTile bt = util.fromJson(BoardsTile.class, value.toString());
+					Tile bt = util.fromJson(Tile.class, value.toString());
 					tiles.add(bt);
 					
 				}
-				board.setBoardsTiles(tiles);
+				
+				/*
+				 * Response is complete, initialize the board.
+				 */
+				board.setTileBeans(tiles);
 				board.initialize();
 			}
 

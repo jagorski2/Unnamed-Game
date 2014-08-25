@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.app.models.Instance;
+import com.app.models.Tile;
+import com.app.models.User;
 import com.badlogic.gdx.graphics.Color;
-import com.mygdx.game.Unit;
-import com.mygdx.game.data.json.BoardsTile;
-import com.mygdx.game.data.json.User;
+import com.mygdx.game.BattleInstance;
+import com.mygdx.game.InstanceUnit;
 import com.mygdx.game.hex.Board;
 
 public class MockGameData implements GameDataInterface {
@@ -16,12 +18,12 @@ public class MockGameData implements GameDataInterface {
 	public Board getBoard(int id) {
 		
 		Board board = new Board(-30, -30, 30);
-		List<BoardsTile> list = new ArrayList<BoardsTile>();
+		List<Tile> list = new ArrayList<Tile>();
 		switch (id) {
 		case 1:
 			for (int i = 0; i < 6; i++) {
 				for (int j = 0; j < 3; j++) {
-					BoardsTile tile = new BoardsTile();
+					Tile tile = new Tile();
 					tile.setBoardId(id);
 					tile.setType(id);
 					tile.setX(i);
@@ -34,7 +36,7 @@ public class MockGameData implements GameDataInterface {
 			for (int i = 0; i < 5; i++) {
 				for (int j = 0; j < 5; j++) {
 					
-					BoardsTile tile = new BoardsTile();
+					Tile tile = new Tile();
 					tile.setBoardId(id);
 					tile.setType(id);
 					tile.setX(i);
@@ -46,7 +48,7 @@ public class MockGameData implements GameDataInterface {
 		case 3:
 			for (int i = 0; i < 10; i++) {
 				for (int j = 0; j < 10; j++) {
-					BoardsTile tile = new BoardsTile();
+					Tile tile = new Tile();
 					tile.setBoardId(id);
 					tile.setType(id);
 					tile.setX(i);
@@ -58,7 +60,7 @@ public class MockGameData implements GameDataInterface {
 		}
 		
 		
-		board.setBoardsTiles(list);
+		board.setTileBeans(list);
 		board.initialize();
 		return board;
 	}
@@ -75,14 +77,14 @@ public class MockGameData implements GameDataInterface {
 	@Override
 	public User getUser(String playerId) {
 		User user = new User();
-		user.setId(69);
-		user.setUserName("fernando");
+		user.setUserId(69);
+		user.setName("fernando");
 		user.setPassword("fernando");
 		return user;
 	}
 
 	@Override
-	public List<Unit> getPlayerUnits(String playerId) {
+	public List<InstanceUnit> getPlayerUnits(String playerId) {
 		return null;
 	}
 
@@ -90,6 +92,22 @@ public class MockGameData implements GameDataInterface {
 	public boolean moveUnit(int battleId, int unitId, int x, int y) {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	@Override
+	public BattleInstance getBattleInstance(Instance instanceBean) {
+		
+		/*
+		 * get board from DB
+		 */
+		Board board = this.getBoard(instanceBean.getBoardId());
+		
+		/*
+		 * create battleInstance
+		 */
+		BattleInstance battleInstance = new BattleInstance(board,instanceBean);
+		
+		return battleInstance;
 	}
 
 }

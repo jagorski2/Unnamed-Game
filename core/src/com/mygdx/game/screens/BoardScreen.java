@@ -1,8 +1,9 @@
-package com.mygdx.game;
+package com.mygdx.game.screens;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.app.models.Instance;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -14,10 +15,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.BattleInstance;
+import com.mygdx.game.BattleInstancePlayer;
+import com.mygdx.game.MyGame;
 import com.mygdx.game.data.comm.GameDataInterface;
 import com.mygdx.game.data.comm.GameDataUtils;
 import com.mygdx.game.hex.Board;
-import com.mygdx.game.screens.MainMenuScreen;
 
 public class BoardScreen implements Screen{
 	SpriteBatch batch;
@@ -58,11 +61,18 @@ public class BoardScreen implements Screen{
 	    camera = new OrthographicCamera();
 	    camera.setToOrtho(false, viewPortWidth, viewPortHeight);
 
-		List<BattleInstancePlayer> players = new ArrayList<BattleInstancePlayer>();
-		players.add(new BattleInstancePlayer());	
+
 		GameDataInterface gameData = GameDataUtils.getInstance();
-		Board board = gameData.getBoard(1);
-		battle = new BattleInstance(board,players);
+		
+		/*
+		 * hardcoded a instance to send to the gameDataInterface
+		 */
+		Instance instance = new Instance();
+		instance.setBoardId(1);
+		instance.setInstanceId(1);
+		instance.setMissionId(1);
+		instance.setTurnId(1);
+		battle = gameData.getBattleInstance(instance);
 	}
 	
 	@Override
@@ -70,7 +80,7 @@ public class BoardScreen implements Screen{
 		Gdx.gl.glClearColor(1, 1, 1, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.setProjectionMatrix(camera.combined);
-		if (battle.getBoard().isReady()) {
+		if (battle != null && battle.getBoard() != null && battle.getBoard().isReady()) {
 			batch.begin();
 			battle.drawBattleInstance();
 			batch.end();

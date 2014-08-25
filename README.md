@@ -1,7 +1,7 @@
 Project Development Environment Setup
 ====
 
-1. Download [this file](http://198.199.86.104/Project_Install.zip)
+1. Download [this file](http://104.131.196.99/Project_Install.zip)
 2. Unzip Project_Install.zip
 2. It Contains the following
   1. 7z920-x64.msi - 7-Zip installer 

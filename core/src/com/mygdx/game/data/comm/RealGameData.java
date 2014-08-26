@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.app.models.Instance;
+import com.app.models.Unit;
 import com.app.models.User;
 import com.mygdx.game.BattleInstance;
 import com.mygdx.game.InstanceUnit;
@@ -24,19 +25,7 @@ public class RealGameData implements GameDataInterface {
 	}
 
 	@Override
-	public List<Board> getBoards(int playerId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public User getUser(String playerId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<InstanceUnit> getPlayerUnits(String playerId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -81,6 +70,12 @@ public class RealGameData implements GameDataInterface {
 		thread.start();
 		// TODO Auto-generated method stub
 		return list;
+	}
+
+	@Override
+	public List<Unit> getPlayerUnits(String playerId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

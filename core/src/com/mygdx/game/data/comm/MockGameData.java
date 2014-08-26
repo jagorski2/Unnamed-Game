@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.app.models.Instance;
 import com.app.models.Tile;
+import com.app.models.Unit;
 import com.app.models.User;
 import com.badlogic.gdx.graphics.Color;
 import com.mygdx.game.BattleInstance;
@@ -66,26 +67,12 @@ public class MockGameData implements GameDataInterface {
 	}
 
 	@Override
-	public List<Board> getBoards(int playerId) {
-		List<Board> list = new LinkedList<Board>();
-		list.add(this.getBoard(1));
-		list.add(this.getBoard(2));
-		list.add(this.getBoard(3));
-		return list;
-	}
-
-	@Override
 	public User getUser(String playerId) {
 		User user = new User();
 		user.setUserId(69);
 		user.setName("fernando");
 		user.setPassword("fernando");
 		return user;
-	}
-
-	@Override
-	public List<InstanceUnit> getPlayerUnits(String playerId) {
-		return null;
 	}
 
 	@Override
@@ -123,6 +110,12 @@ public class MockGameData implements GameDataInterface {
 			list.add(instance);
 		}
 		return list;
+	}
+
+	@Override
+	public List<Unit> getPlayerUnits(String playerId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

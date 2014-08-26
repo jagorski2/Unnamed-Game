@@ -82,6 +82,9 @@ public class BoardScreen implements Screen{
 		while (list.isEmpty()) {
 			this.render(0);
 		}
+		for (Instance i : list) {
+			System.out.println(i.getBoardId());
+		}
 		System.out.println("success");
 		//System.out.println("success");
 	}

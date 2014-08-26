@@ -1,5 +1,6 @@
 package com.mygdx.game.data.comm;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import com.app.models.Instance;
@@ -7,7 +8,7 @@ import com.app.models.User;
 import com.mygdx.game.BattleInstance;
 import com.mygdx.game.InstanceUnit;
 import com.mygdx.game.data.client.BoardClient;
-import com.mygdx.game.data.client.InstanceClient;
+import com.mygdx.game.data.client.InstancesClient;
 import com.mygdx.game.hex.Board;
 
 public class RealGameData implements GameDataInterface {
@@ -16,7 +17,7 @@ public class RealGameData implements GameDataInterface {
 	public Board getBoard(int id) {
 		Board board = new Board(-30,-30,50);
        
-		Thread boardInitialize = new Thread(new BoardClient(board));
+		Thread boardInitialize = new Thread(new BoardClient(board,id));
         boardInitialize.start();
         
         return board;
@@ -55,7 +56,7 @@ public class RealGameData implements GameDataInterface {
 		 */
 		Board board = new Board(-30,-30,50);
 	       
-		Thread boardInitialize = new Thread(new BoardClient(board));
+		Thread boardInitialize = new Thread(new BoardClient(board,instanceBean.getBoardId()));
         boardInitialize.start();
         
         /*
@@ -63,6 +64,23 @@ public class RealGameData implements GameDataInterface {
          */
 		instance = new BattleInstance(board,instanceBean);
 		return instance;
+	}
+
+	@Override
+	public List<Instance> getInstances(User user) {
+		
+		/*
+		 * initialize the board to be returned
+		 */
+		List<Instance> list = new LinkedList<Instance>();
+		
+		/*
+		 * start the request thread
+		 */
+		Thread thread = new Thread(new InstancesClient(list,user));
+		thread.start();
+		// TODO Auto-generated method stub
+		return list;
 	}
 
 }

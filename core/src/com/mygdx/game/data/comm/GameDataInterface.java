@@ -34,4 +34,14 @@ public interface GameDataInterface {
 	 */
 	public BattleInstance getBattleInstance(Instance instanceBean);
 	
+	/**
+	 * gets all battle instances that the user is currently involved in
+	 * 
+	 * this should be used in the display all current battles/boards screen
+	 * 
+	 * @param user logged in User to fetch its associates instances
+	 * @return
+	 */
+	public List<Instance> getInstances(User user);
+	
 }

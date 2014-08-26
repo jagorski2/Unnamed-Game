@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.app.models.Instance;
+import com.app.models.User;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -73,6 +74,16 @@ public class BoardScreen implements Screen{
 		instance.setMissionId(1);
 		instance.setTurnId(1);
 		battle = gameData.getBattleInstance(instance);
+		User user = new User();
+		user.setName("fernando");
+		user.setPassword("fernando");
+		user.setUserId(1);
+		List<Instance> list = gameData.getInstances(user);
+		while (list.isEmpty()) {
+			this.render(0);
+		}
+		System.out.println("success");
+		//System.out.println("success");
 	}
 	
 	@Override

@@ -110,4 +110,19 @@ public class MockGameData implements GameDataInterface {
 		return battleInstance;
 	}
 
+	@Override
+	public List<Instance> getInstances(User user) {
+		
+		List<Instance> list = new LinkedList<Instance>();
+		for (int i = 1; i <= 3; i ++) {
+			Instance instance = new Instance();
+			instance.setBoardId(i);
+			instance.setInstanceId(i);
+			instance.setMissionId(i);
+			instance.setTurnId(i);
+			list.add(instance);
+		}
+		return list;
+	}
+
 }

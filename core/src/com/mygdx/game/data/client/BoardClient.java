@@ -15,8 +15,15 @@ public class BoardClient implements Runnable {
 	
 	private static final String uri = "/tiles";
 	private final Board board;
-	public BoardClient(Board board) {
+	private final int id;
+	/**
+	 * 
+	 * @param board this instance of board will get data and initialize
+	 * @param id the board id that the database should select on
+	 */
+	public BoardClient(Board board,int id) {
 		this.board = board;
+		this.id = id;
 	}
 
 	@Override
@@ -52,6 +59,6 @@ public class BoardClient implements Runnable {
 			}
 			
 		};
-		JsonClient.getInstance().sendPost(1, uri, callback, List.class);
+		JsonClient.getInstance().sendPost(id, uri, callback, List.class);
 	}
 }

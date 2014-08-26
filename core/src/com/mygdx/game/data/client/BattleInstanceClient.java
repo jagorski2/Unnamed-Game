@@ -8,13 +8,13 @@ import com.mygdx.game.data.json.JsonClient;
 import com.mygdx.game.data.json.JsonClientException;
 import com.mygdx.game.data.json.ResponseCallback;
 
-public class InstanceClient implements Runnable {
+public class BattleInstanceClient implements Runnable {
 
 	private int id;
 	private final Instance instance;
 	private static final String uri = "/instance";
 	
-	public InstanceClient(int id, Instance instance) {
+	public BattleInstanceClient(int id, Instance instance) {
 		this.id = id;
 		this.instance = instance;
 	}

@@ -118,4 +118,10 @@ public class MockGameData implements GameDataInterface {
 		return null;
 	}
 
+	@Override
+	public List<Unit> getUnits(Instance instance, User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

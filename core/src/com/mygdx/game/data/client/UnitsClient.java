@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.app.models.Instance;
 import com.app.models.Tile;
+import com.app.models.Unit;
 import com.app.models.User;
 import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.data.json.JsonClient;
@@ -12,24 +13,37 @@ import com.mygdx.game.data.json.JsonClientException;
 import com.mygdx.game.data.json.JsonUtil;
 import com.mygdx.game.data.json.ResponseCallback;
 
-public class InstancesClient implements Runnable {
+public class UnitsClient implements Runnable {
 
-	private final String uri ="/getInstances";
-	private final List<Instance> list;
+	private final String uri ="/getUnits";
+	private final List<Unit> list;
 	private User user;
+	private Instance instance;
 	
 	/**
 	 * 
 	 * @param list the list reference that elements will be added to by the callback
 	 * @param user the request parameter for the DB transaction
 	 */
-	public InstancesClient(List<Instance> list, User user) {
+	public UnitsClient(List<Unit> list, Instance instance, User user) {
 		this.user = user;
 		this.list = list;
+		this.instance = instance;
 	}
 	@Override
 	public void run() {
+		
+		/**
+		 * first ID sent in is the user,
+		 * second ID sent in is the instanceID
+		 */
 		int id = user.getUserId();
+		int id2 = instance.getInstanceId();
+		List<Integer> reqList = new LinkedList<Integer>();
+		reqList.add(id);
+		reqList.add(id2);
+		
+		
 		ResponseCallback callback = new ResponseCallback(){
 
 			@Override
@@ -40,8 +54,8 @@ public class InstancesClient implements Runnable {
 				 * get each JsonValue and convert to an Instance
 				 */
 				for (JsonValue value : jsons) {
-					Instance instance = util.fromJson(Instance.class, value.toString());
-					list.add(instance);
+					Unit unit = util.fromJson(Unit.class, value.toString());
+					list.add(unit);
 				}
 			}
 
@@ -51,7 +65,7 @@ public class InstancesClient implements Runnable {
 			}
 			
 		};
-		JsonClient.getInstance().sendPost(id, uri, callback, List.class);
+		JsonClient.getInstance().sendPost(reqList, uri, callback, List.class);
 	}
 
 }

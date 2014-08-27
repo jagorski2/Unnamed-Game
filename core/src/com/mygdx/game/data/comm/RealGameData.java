@@ -10,6 +10,7 @@ import com.mygdx.game.BattleInstance;
 import com.mygdx.game.InstanceUnit;
 import com.mygdx.game.data.client.BoardClient;
 import com.mygdx.game.data.client.InstancesClient;
+import com.mygdx.game.data.client.UnitsClient;
 import com.mygdx.game.hex.Board;
 
 public class RealGameData implements GameDataInterface {
@@ -76,6 +77,14 @@ public class RealGameData implements GameDataInterface {
 	public List<Unit> getPlayerUnits(String playerId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Unit> getUnits(Instance instance, User user) {
+		List<Unit> retList = new LinkedList<Unit>();
+		Thread thread = new Thread(new UnitsClient(retList,instance,user));
+		// TODO Auto-generated method stub
+		return retList;
 	}
 
 }

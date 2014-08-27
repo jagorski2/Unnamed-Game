@@ -53,6 +53,6 @@ public interface GameDataInterface {
 	 */
 	public List<Instance> getInstances(User user);
 	
-	
-	
+
+	public List<Unit> getUnits(Instance instance, User user);
 }

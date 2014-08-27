@@ -1,9 +1,9 @@
 package com.mygdx.game.screens;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.app.models.Instance;
+import com.app.models.Unit;
 import com.app.models.User;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -17,11 +17,9 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.BattleInstance;
-import com.mygdx.game.BattleInstancePlayer;
 import com.mygdx.game.MyGame;
 import com.mygdx.game.data.comm.GameDataInterface;
 import com.mygdx.game.data.comm.GameDataUtils;
-import com.mygdx.game.hex.Board;
 
 public class BoardScreen implements Screen{
 	SpriteBatch batch;
@@ -78,15 +76,15 @@ public class BoardScreen implements Screen{
 		user.setName("fernando");
 		user.setPassword("fernando");
 		user.setUserId(1);
-		List<Instance> list = gameData.getInstances(user);
+		
+		List<Unit> list = gameData.getUnits(instance,user);
 		while (list.isEmpty()) {
 			this.render(0);
 		}
-		for (Instance i : list) {
-			System.out.println(i.getBoardId());
+		for (Unit i : list) {
+			System.out.println(i.getUnitId() + ":" + i.getMaxHealth() + ":");
 		}
 		System.out.println("success");
-		//System.out.println("success");
 	}
 	
 	@Override

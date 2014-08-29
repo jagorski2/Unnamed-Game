@@ -83,6 +83,7 @@ public class RealGameData implements GameDataInterface {
 	public List<Unit> getUnits(Instance instance, User user) {
 		List<Unit> retList = new LinkedList<Unit>();
 		Thread thread = new Thread(new UnitsClient(retList,instance,user));
+		thread.start();
 		// TODO Auto-generated method stub
 		return retList;
 	}

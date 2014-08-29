@@ -1,13 +1,14 @@
 package com.mygdx.game.data.client;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import com.app.models.Instance;
-import com.app.models.Tile;
 import com.app.models.Unit;
+import com.app.models.UnitRequest;
 import com.app.models.User;
+import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.JsonWriter;
 import com.mygdx.game.data.json.JsonClient;
 import com.mygdx.game.data.json.JsonClientException;
 import com.mygdx.game.data.json.JsonUtil;
@@ -39,9 +40,10 @@ public class UnitsClient implements Runnable {
 		 */
 		int id = user.getUserId();
 		int id2 = instance.getInstanceId();
-		List<Integer> reqList = new LinkedList<Integer>();
-		reqList.add(id);
-		reqList.add(id2);
+		UnitRequest req = new UnitRequest();
+		req.setUserId(user.getUserId());
+		req.setInstanceId(instance.getInstanceId());
+		Json json = new Json();
 		
 		
 		ResponseCallback callback = new ResponseCallback(){
@@ -65,7 +67,7 @@ public class UnitsClient implements Runnable {
 			}
 			
 		};
-		JsonClient.getInstance().sendPost(reqList, uri, callback, List.class);
+		JsonClient.getInstance().sendPost(req, uri, callback, List.class);
 	}
 
 }

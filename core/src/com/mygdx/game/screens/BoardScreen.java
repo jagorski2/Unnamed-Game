@@ -84,6 +84,7 @@ public class BoardScreen implements Screen{
 		for (Unit i : list) {
 			System.out.println(i.getUnitId() + ":" + i.getMaxHealth() + ":");
 		}
+		
 		System.out.println("success");
 	}
 	

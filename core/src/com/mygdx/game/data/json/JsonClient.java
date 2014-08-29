@@ -34,7 +34,6 @@ public class JsonClient {
 	        request.setUrl(url);
 
 	        request.setContent(requestJson);
-
 	        request.setHeader("Content-Type", "application/json");
 	        request.setHeader("Accept", "application/json");
 

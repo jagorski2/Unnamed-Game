@@ -79,12 +79,12 @@ public class BoardScreen implements Screen{
 		
 		List<Unit> list = gameData.getUnits(instance,user);
 		while (list.isEmpty()) {
-			this.render(0);
+		//spin	
 		}
+		System.out.println("you have this many units in your structure:" + list.size());
 		for (Unit i : list) {
 			System.out.println(i.getUnitId() + ":" + i.getMaxHealth() + ":");
 		}
-		
 		System.out.println("success");
 	}
 	

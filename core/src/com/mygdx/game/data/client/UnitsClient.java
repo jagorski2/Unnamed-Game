@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.app.models.Instance;
 import com.app.models.Unit;
-import com.app.models.UnitRequest;
 import com.app.models.User;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
@@ -40,9 +39,9 @@ public class UnitsClient implements Runnable {
 		 */
 		int id = user.getUserId();
 		int id2 = instance.getInstanceId();
-		UnitRequest req = new UnitRequest();
-		req.setUserId(user.getUserId());
-		req.setInstanceId(instance.getInstanceId());
+		//UnitRequest req = new UnitRequest();
+		//req.setUserId(user.getUserId());
+		//req.setInstanceId(instance.getInstanceId());
 		Json json = new Json();
 		
 		
@@ -67,7 +66,7 @@ public class UnitsClient implements Runnable {
 			}
 			
 		};
-		JsonClient.getInstance().sendPost(req, uri, callback, List.class);
+		JsonClient.getInstance().sendPost(0, uri, callback, List.class);
 	}
 
 }

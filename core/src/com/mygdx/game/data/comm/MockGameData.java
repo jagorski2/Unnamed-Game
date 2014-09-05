@@ -8,9 +8,9 @@ import com.app.models.Instance;
 import com.app.models.Tile;
 import com.app.models.Unit;
 import com.app.models.User;
-import com.badlogic.gdx.graphics.Color;
 import com.mygdx.game.BattleInstance;
 import com.mygdx.game.InstanceUnit;
+import com.mygdx.game.MyGame;
 import com.mygdx.game.hex.Board;
 
 public class MockGameData implements GameDataInterface {
@@ -82,7 +82,7 @@ public class MockGameData implements GameDataInterface {
 	}
 
 	@Override
-	public BattleInstance getBattleInstance(Instance instanceBean) {
+	public void LoadInstance(MyGame game, Instance instanceBean) {
 		
 		/*
 		 * get board from DB
@@ -92,9 +92,7 @@ public class MockGameData implements GameDataInterface {
 		/*
 		 * create battleInstance
 		 */
-		BattleInstance battleInstance = new BattleInstance(board,instanceBean);
-		
-		return battleInstance;
+		BattleInstance battleInstance = new BattleInstance(board,instanceBean, new LinkedList<InstanceUnit>());
 	}
 
 	@Override

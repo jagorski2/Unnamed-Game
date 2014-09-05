@@ -7,6 +7,7 @@ import com.app.models.Unit;
 import com.app.models.User;
 import com.mygdx.game.BattleInstance;
 import com.mygdx.game.InstanceUnit;
+import com.mygdx.game.MyGame;
 import com.mygdx.game.hex.Board;
 /**
  *  Functions as a gatekeeper between front-end and back-end. talks to the server for any CRUD purposes
@@ -38,7 +39,7 @@ public interface GameDataInterface {
 	 * @param id instance ID
 	 * @return
 	 */
-	public BattleInstance getBattleInstance(Instance instanceBean);
+	public void LoadInstance(MyGame game,Instance instanceBean);
 	
 	
 	/**

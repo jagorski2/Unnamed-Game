@@ -35,7 +35,9 @@ public class BoardScreen implements Screen{
 	public static OrthographicCamera camera;
 	public static Vector3 touchPos;
 	public static Vector3 rightPos;
-	BattleInstance battle;
+	private BattleInstance battle;
+
+
 	ShaderProgram shader;
 	public static boolean unitIsSelected = false;
 	private int viewPortWidth = 300;
@@ -59,33 +61,6 @@ public class BoardScreen implements Screen{
 		project_shape_renderer = new ShapeRenderer();
 	    camera = new OrthographicCamera();
 	    camera.setToOrtho(false, viewPortWidth, viewPortHeight);
-
-
-		GameDataInterface gameData = GameDataUtils.getInstance();
-		
-		/*
-		 * hardcoded a instance to send to the gameDataInterface
-		 */
-		Instance instance = new Instance();
-		instance.setBoardId(1);
-		instance.setInstanceId(1);
-		instance.setMissionId(1);
-		instance.setTurnId(1);
-		battle = gameData.getBattleInstance(instance);
-		User user = new User();
-		user.setName("fernando");
-		user.setPassword("fernando");
-		user.setUserId(1);
-		
-		List<Unit> list = gameData.getUnits(instance,user);
-		while (list.isEmpty()) {
-			this.render(0);
-		}
-		for (Unit i : list) {
-			System.out.println(i.getUnitId() + ":" + i.getMaxHealth() + ":");
-		}
-		
-		System.out.println("success");
 	}
 	
 	@Override
@@ -137,5 +112,12 @@ public class BoardScreen implements Screen{
 		
 	}
 
+	public BattleInstance getBattle() {
+		return battle;
+	}
+
+	public void setBattle(BattleInstance battle) {
+		this.battle = battle;
+	}
 
 }

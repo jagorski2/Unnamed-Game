@@ -8,6 +8,7 @@ import com.app.models.Unit;
 import com.app.models.User;
 import com.mygdx.game.BattleInstance;
 import com.mygdx.game.InstanceUnit;
+import com.mygdx.game.MyGame;
 import com.mygdx.game.data.client.BoardClient;
 import com.mygdx.game.data.client.InstancesClient;
 import com.mygdx.game.data.client.UnitsClient;
@@ -19,9 +20,7 @@ public class RealGameData implements GameDataInterface {
 	public Board getBoard(int id) {
 		Board board = new Board(-30,-30,50);
        
-		Thread boardInitialize = new Thread(new BoardClient(board,id));
-        boardInitialize.start();
-        
+		
         return board;
 	}
 
@@ -38,22 +37,10 @@ public class RealGameData implements GameDataInterface {
 	}
 
 	@Override
-	public BattleInstance getBattleInstance(Instance instanceBean) {
-		BattleInstance instance = null;
+	public void LoadInstance(MyGame game, Instance instanceBean) {
 		
-		/*
-		 * initialize my board
-		 */
-		Board board = new Board(-30,-30,50);
-	       
-		Thread boardInitialize = new Thread(new BoardClient(board,instanceBean.getBoardId()));
+		Thread boardInitialize = new Thread(new BoardClient(game,instanceBean));
         boardInitialize.start();
-        
-        /*
-         * give the battleInstance references to its composed beans
-         */
-		instance = new BattleInstance(board,instanceBean);
-		return instance;
 	}
 
 	@Override

@@ -17,6 +17,7 @@ public class InstanceUnit
 	
 	public InstanceUnit(com.app.models.Unit unit) {
 		this.unitBean = unit;
+		color = Color.RED;
 	}
 
 

@@ -43,10 +43,16 @@ public class BattleInstance
 	 * There is no reason to have an instance of this class without a board and a list of players...
 	 * 
 	 */
-	public BattleInstance(Board board, Instance instanceBean) 
+	public BattleInstance(Board board, Instance instanceBean, List<InstanceUnit> units) 
 	{
 		this.board = board;
 		this.instanceBean = instanceBean;
+		this.units = units;
+		
+		/*
+		 * finishes populating the InstanceUnits
+		 */
+		this.findUnitHexagons();
 	}
 	
 	public Board getBoard()
@@ -136,9 +142,9 @@ public class BattleInstance
 		board.drawBoard();
 		
 		/*
-		for (BattleInstancePlayer player : players)
+		for (InstanceUnit unit : units)
 		{
-			player.drawAllUnits();
+			unit.drawUnit();
 		}
 		*/
 		if (this.focused_tile != null) 
@@ -165,7 +171,6 @@ public class BattleInstance
 		BoardScreen.project_shape_renderer.end();
 	}
 
-	//@Deprecated
 	public void drawOccupiedTiles() {
 		for (int i = 0; i < board.getWidth(); i++) {
 			for (int j = 0; j < board.getHeight(); j++) {
@@ -181,6 +186,19 @@ public class BattleInstance
 		}
 	}
 
+	/*
+	 * this needs to be called to find each loaded units first hexagon.
+	 */
+	public void findUnitHexagons() {
+		for (InstanceUnit unit : units) {
+			int x = unit.getUnitBean().getxPos();
+			int y = unit.getUnitBean().getyPos();
+			InstanceTile tile = this.getBoard().getTile(x, y);
+			unit.setHexagon(tile.getHexagon());
+			tile.setUnit(unit);
+			tile.setOccupied(true);
+		}
+	}
 	public Hexagon getFocusedTilesHexagon() 
 	{
 		return focused_tile.getHexagon() ;

@@ -1,6 +1,7 @@
 package com.mygdx.game.screens;
 
 
+import com.app.models.Instance;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -13,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.MyGame;
+import com.mygdx.game.data.comm.GameDataInterface;
+import com.mygdx.game.data.comm.GameDataUtils;
 
 public class MainMenuScreen implements Screen {
 
@@ -50,8 +53,20 @@ public class MainMenuScreen implements Screen {
                 //Same way we moved here from the Splash Screen
                 //We set it to new Splash because we got no other screens
                 //otherwise you put the screen there where you want to go
-                game.setScreen(game.board);
-                
+
+        		GameDataInterface gameData = GameDataUtils.getInstance();
+        		
+        		/*
+        		 * hardcoded a instance to send to the gameDataInterface
+        		 */
+        		Instance instance = new Instance();
+        		instance.setBoardId(1);
+        		instance.setInstanceId(1);
+        		instance.setMissionId(1);
+        		instance.setTurnId(1);
+        		
+        		gameData.LoadInstance(game,instance);    
+        		game.setScreen(game.board);
             }
         });
         buttonExit.addListener(new ClickListener(){

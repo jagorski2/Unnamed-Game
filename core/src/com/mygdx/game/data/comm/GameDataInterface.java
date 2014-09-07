@@ -5,8 +5,6 @@ import java.util.List;
 import com.app.models.Instance;
 import com.app.models.Unit;
 import com.app.models.User;
-import com.mygdx.game.BattleInstance;
-import com.mygdx.game.InstanceUnit;
 import com.mygdx.game.MyGame;
 import com.mygdx.game.hex.Board;
 /**
@@ -33,13 +31,14 @@ public interface GameDataInterface {
 	 * @return true upon successful gamestate change
 	 */
 	public boolean moveUnit(int battleId,int unitId,int x,int y);
+
+
 	/**
-	 * returns a prepared battle instance to be used in BoardScreen
-	 * , WHEN the board is ready to be invoke render(), battleInstance.board.isReady() == true;
-	 * @param id instance ID
-	 * @return
+	 * 
+	 * @param game instance of the only game
+	 * @param instanceBean id's relevant to the query
 	 */
-	public void LoadInstance(MyGame game,Instance instanceBean);
+	public void loadInstance(MyGame game,Instance instanceBean);
 	
 	
 	/**

@@ -65,7 +65,7 @@ public class MainMenuScreen implements Screen {
         		instance.setMissionId(1);
         		instance.setTurnId(1);
         		
-        		gameData.LoadInstance(game,instance);    
+        		gameData.loadInstance(game,instance);    
         		game.setScreen(game.board);
             }
         });

@@ -82,7 +82,7 @@ public class MockGameData implements GameDataInterface {
 	}
 
 	@Override
-	public void LoadInstance(MyGame game, Instance instanceBean) {
+	public void loadInstance(MyGame game, Instance instanceBean) {
 		
 		/*
 		 * get board from DB

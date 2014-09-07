@@ -37,7 +37,7 @@ public class RealGameData implements GameDataInterface {
 	}
 
 	@Override
-	public void LoadInstance(MyGame game, Instance instanceBean) {
+	public void loadInstance(MyGame game, Instance instanceBean) {
 		
 		Thread boardInitialize = new Thread(new BoardClient(game,instanceBean));
         boardInitialize.start();

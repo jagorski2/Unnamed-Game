@@ -122,4 +122,9 @@ public class MockGameData implements GameDataInterface {
 		return null;
 	}
 
+	@Override
+	public void login(User user) {
+		// TODO Auto-generated method stub
+	}
+
 }

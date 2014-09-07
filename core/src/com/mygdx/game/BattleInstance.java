@@ -4,19 +4,16 @@ import java.util.List;
 
 import com.app.models.Instance;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.input.GestureDetector.GestureListener;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.mygdx.game.screens.BoardScreen;
-import com.mygdx.game.utils.UnitTypeConstants;
 import com.mygdx.game.hex.Board;
 import com.mygdx.game.hex.Hexagon;
+import com.mygdx.game.screens.BoardScreen;
 
 
 /**
@@ -34,6 +31,12 @@ public class BattleInstance
 	private InstanceTile selected_tile;
 	private InstanceUnit selected_Unit;
 	private Instance instanceBean;					//comes from the database
+	
+	/*
+	 * robot
+	 */
+	private UnitArtist robot;
+
 	
 	private List<BattleInstancePlayer> players;			//contains all the players that are involved in the battle instance.
 	private List<InstanceUnit> units;
@@ -152,6 +155,13 @@ public class BattleInstance
 			this.drawFocusedHexagon();
 		}
 		this.drawOccupiedTiles();
+		
+		if (robot == null) {
+			robot = new UnitArtist();
+		}
+			
+		
+		robot.drawRobot(50, 50);
 	}
 	
 	

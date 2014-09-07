@@ -55,7 +55,7 @@ public class RealGameData implements GameDataInterface {
 		 * start the request thread
 		 */
 		Thread thread = new Thread(new InstancesClient(list,user));
-		thread.start();
+	thread.start();
 		// TODO Auto-generated method stub
 		return list;
 	}
@@ -73,6 +73,15 @@ public class RealGameData implements GameDataInterface {
 		thread.start();
 		// TODO Auto-generated method stub
 		return retList;
+	}
+
+	/**
+	 * right now i see this method working by getting the ID associated with a name/password from the database 
+	 * and only pulling back the ID if both columns match exactly.
+	 */
+	@Override
+	public void login(User user) {
+		user.setUserId(1);
 	}
 
 }

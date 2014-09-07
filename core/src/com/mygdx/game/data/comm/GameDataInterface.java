@@ -25,7 +25,7 @@ public interface GameDataInterface {
 	public Board getBoard(int id);
 	public User getUser(String playerId);
 	public List<Unit> getPlayerUnits(String playerId);
-	
+	public void login(User user);
 	/**
 	 * 
 	 * @return true upon successful gamestate change

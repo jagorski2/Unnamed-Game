@@ -80,7 +80,7 @@ public class BoardClient implements Runnable {
 				/*
 				 * tell the game to switch its screen to the BoardScreen screen
 				 */
-				game.setScreen(game.board);
+				//game.setScreen(game.board);
 			}
 
 			@Override

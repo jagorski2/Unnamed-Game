@@ -117,7 +117,7 @@ public class BattleInstance
 			}
 			BoardScreen.rightPos.set(Gdx.input.getX(),Gdx.input.getY(),0);
 			BoardScreen.camera.unproject(BoardScreen.rightPos);
-			clicked_tile = board.getClosestTile(BoardScreen.rightPos);
+			clicked_tile = board.getClosestHexagon(BoardScreen.rightPos);
 			if(clicked_tile != null && clicked_tile.isOccupied()){
 				selected_Unit = clicked_tile.getUnit();
 				selected_tile = clicked_tile;

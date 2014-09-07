@@ -78,4 +78,34 @@ public class InstanceUnit
 	public void setUnitBean(com.app.models.Unit unitBean) {
 		this.unitBean = unitBean;
 	}
+
+
+	public int getUnitType() {
+		// TODO Auto-generated method stub
+		return 1;
+	}
+
+
+	public int getHealth() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	public void setHealth(int i) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void setDead(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public boolean canAttack(int unitType) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

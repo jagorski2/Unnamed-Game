@@ -1,13 +1,17 @@
 package com.mygdx.game.hex;
-import java.util.List;
 
+import java.util.List;
 import com.app.models.Tile;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
+import com.badlogic.gdx.graphics.g2d.PolygonSprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.InstanceTile;
+import com.mygdx.game.InstanceUnit;
 import com.mygdx.game.screens.BoardScreen;
+import com.mygdx.game.utils.UnitTypeConstants;
+import com.mygdx.game.MyGame;
 
 public class Board {
 
@@ -62,6 +66,24 @@ public class Board {
 			InstanceTile instanceTile = new InstanceTile(hex);
 			instanceTile.setType(tile.getType());
 			tiles[x][y] = instanceTile;
+			
+			tiles[x][y].setHexagon(hex);
+			tiles[x][y].setPolygonSprite(new PolygonSprite( new PolygonRegion(BoardScreen.textureGreen, hex.getVertices(), BoardScreen.triangles)));
+			/*if (x == 11 && y == 11 ){
+				tiles[x][y].setOccupied(true);
+				tiles[x][y].setUnit(new InstanceUnit(UnitTypeConstants.WARRIOR));
+
+			}
+			if (x == 11 && y == 12 ){
+				tiles[x][y].setOccupied(true);
+				tiles[x][y].setUnit(new InstanceUnit(UnitTypeConstants.MAGE));
+
+			}
+			if (x == 11 && y == 13 ){
+				tiles[x][y].setOccupied(true);
+				tiles[x][y].setUnit(new InstanceUnit(UnitTypeConstants.ARCHER));
+
+			}*/
 		}
 		Hexagon hex = new Hexagon(0,0,2);
 		InstanceTile tile = new InstanceTile(hex);
@@ -93,16 +115,16 @@ public class Board {
 		
 		return new Point(greatestX + 1, greatestY + 1);
 	}
-
-	public InstanceTile getClosestTile(Vector3 vect) {
+	
+	public InstanceTile findClickedHexagon(Vector3 vect) {
+		InstanceTile tile = null;
 		float x = vect.x;
-		float y = vect.y;
+		float y = vect.z;
 		Vector3 centerVect = new Vector3();
 		double closest = 999999999;
 		double dist;
-		InstanceTile ret = null;
-		for (int i = 0; i < getWidth(); i++) {
-			for (int j = 0; j < getHeight(); j++) {
+		for (int i = 0; i < 12; i++) {
+			for (int j = 0; j < 24; j++) {
 				Hexagon hex;
 				hex = tiles[i][j].getHexagon();
 				centerVect.set(hex.getCenter().getX(), hex.getCenter().getY(),
@@ -110,13 +132,13 @@ public class Board {
 				dist = Math.distance(x, centerVect.x, y, centerVect.y);
 				if (dist < closest) {
 					closest = dist;
-					ret = tiles[i][j];
-					//System.out.println(i + " : " + j);
+					tile = tiles[i][j];
 				}
 
 			}
 		}
-		return ret;
+		return tile;
+
 	}
 	
 	public void drawBoard() {

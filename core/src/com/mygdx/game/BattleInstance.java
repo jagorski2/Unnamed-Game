@@ -199,9 +199,11 @@ public class BattleInstance
 			int x = unit.getUnitBean().getxPos();
 			int y = unit.getUnitBean().getyPos();
 			InstanceTile tile = this.getBoard().getTile(x, y);
-			unit.setHexagon(tile.getHexagon());
-			tile.setUnit(unit);
-			tile.setOccupied(true);
+			if (tile != null) {
+				unit.setHexagon(tile.getHexagon());
+				tile.setUnit(unit);
+				tile.setOccupied(true);
+			}
 		}
 	}
 	public Hexagon getFocusedTilesHexagon() 

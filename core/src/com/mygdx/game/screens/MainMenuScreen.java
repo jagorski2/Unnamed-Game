@@ -61,7 +61,7 @@ public class MainMenuScreen implements Screen {
         		 */
         		Instance instance = new Instance();
         		instance.setBoardId(1);
-        		instance.setInstanceId(1);
+        		instance.setInstanceId(2);
         		instance.setMissionId(1);
         		instance.setTurnId(1);
         		

@@ -2,13 +2,16 @@ package com.mygdx.game;
 
 import com.mygdx.game.hex.Hexagon;
 
-public class Tile {
+public class InstanceTile {
 
 	private Hexagon hexagon;
-	private Unit unit;
+	private InstanceUnit unit;
 	private int type;
 	private boolean occupied;
 
+	public InstanceTile(Hexagon hexagon) {
+		this.hexagon = hexagon;
+	}
 	public Hexagon getHexagon() {
 		return hexagon;
 	}
@@ -17,11 +20,11 @@ public class Tile {
 		this.hexagon = hexagon;
 	}
 
-	public Unit getUnit() {
+	public InstanceUnit getUnit() {
 		return unit;
 	}
 
-	public void setUnit(Unit unit) {
+	public void setUnit(InstanceUnit unit) {
 		this.unit = unit;
 	}
 

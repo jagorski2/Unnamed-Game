@@ -14,19 +14,19 @@ import com.mygdx.game.hex.Board;
  */
 public class BattleInstancePlayer {
 
-	private List<Unit> units;
+	private List<InstanceUnit> units;
 	private int player_id;
 
 	public BattleInstancePlayer() {
-		units = new ArrayList<Unit>();
+		units = new ArrayList<InstanceUnit>();
 		player_id = 0;
 	}
 
-	public List<Unit> getUnits() {
+	public List<InstanceUnit> getUnits() {
 		return units;
 	}
 
-	public void setUnits(List<Unit> units) {
+	public void setUnits(List<InstanceUnit> units) {
 		this.units = units;
 	}
 
@@ -43,7 +43,7 @@ public class BattleInstancePlayer {
 	 */
 	public void drawAllUnits() {
 		for (int i = 0; i < units.size(); i++) {
-			Unit unit = units.get(i);
+			InstanceUnit unit = units.get(i);
 			if (unit != null) {
 				//TODO draw unit...
 			}

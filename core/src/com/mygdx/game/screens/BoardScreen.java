@@ -1,10 +1,13 @@
-package com.mygdx.game;
+package com.mygdx.game.screens;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import com.app.models.Instance;
+import com.app.models.Unit;
+import com.app.models.User;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,10 +17,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.BattleInstance;
+import com.mygdx.game.MyGame;
 import com.mygdx.game.data.comm.GameDataInterface;
 import com.mygdx.game.data.comm.GameDataUtils;
-import com.mygdx.game.hex.Board;
-import com.mygdx.game.screens.MainMenuScreen;
 
 public class BoardScreen implements Screen{
 	SpriteBatch batch;
@@ -33,7 +36,9 @@ public class BoardScreen implements Screen{
 	public static OrthographicCamera camera;
 	public static Vector3 touchPos;
 	public static Vector3 rightPos;
-	BattleInstance battle;
+	private BattleInstance battle;
+	private AssetManager manager;
+
 	ShaderProgram shader;
 	public static boolean unitIsSelected = false;
 	private int viewPortWidth = 300;
@@ -57,12 +62,6 @@ public class BoardScreen implements Screen{
 		project_shape_renderer = new ShapeRenderer();
 	    camera = new OrthographicCamera();
 	    camera.setToOrtho(false, viewPortWidth, viewPortHeight);
-
-		List<BattleInstancePlayer> players = new ArrayList<BattleInstancePlayer>();
-		players.add(new BattleInstancePlayer());	
-		GameDataInterface gameData = GameDataUtils.getInstance();
-		Board board = gameData.getBoard(1);
-		battle = new BattleInstance(board,players);
 	}
 	
 	@Override
@@ -70,7 +69,7 @@ public class BoardScreen implements Screen{
 		Gdx.gl.glClearColor(1, 1, 1, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.setProjectionMatrix(camera.combined);
-		if (battle.getBoard().isReady()) {
+		if (battle != null && battle.getBoard() != null && battle.getBoard().isReady()) {
 			batch.begin();
 			battle.drawBattleInstance();
 			batch.end();
@@ -114,5 +113,12 @@ public class BoardScreen implements Screen{
 		
 	}
 
+	public BattleInstance getBattle() {
+		return battle;
+	}
+
+	public void setBattle(BattleInstance battle) {
+		this.battle = battle;
+	}
 
 }

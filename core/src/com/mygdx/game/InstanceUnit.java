@@ -4,23 +4,20 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.mygdx.game.hex.Hexagon;
 import com.mygdx.game.hex.Point;
+import com.mygdx.game.screens.BoardScreen;
 
-public class Unit 
+public class InstanceUnit 
 {
 	
 	private Point position;
-	private int type;
 	private boolean isSelected;
+	private com.app.models.Unit unitBean;
 	private Color color;
 	private Hexagon hexagon;
 	
-	public int getType() {
-		return type;
-	}
-
-
-	public void setType(int type) {
-		this.type = type;
+	public InstanceUnit(com.app.models.Unit unit) {
+		this.unitBean = unit;
+		color = Color.RED;
 	}
 
 
@@ -33,24 +30,11 @@ public class Unit
 		this.hexagon = hexagon;
 	}
 
-	
-	public Unit (int unitType){
-		this.type = unitType;
-	}
-	
-	
 	public Point getPosition() 
 	{
 		return position;
 	}
-	public void setUnitType(int unitType) 
-	{
-		this.type = unitType;
-	}	
-	public int getUnitType() 
-	{
-		return this.type;
-	}	
+
 	public void setSelected(boolean selected) 
 	{
 		this.isSelected = selected;
@@ -84,5 +68,15 @@ public class Unit
 
 	public void setColor(Color color) {
 		this.color = color;
+	}
+
+
+	public com.app.models.Unit getUnitBean() {
+		return unitBean;
+	}
+
+
+	public void setUnitBean(com.app.models.Unit unitBean) {
+		this.unitBean = unitBean;
 	}
 }

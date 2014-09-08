@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,26 +16,28 @@ public class UnitArtist {
 	private Animation robotAnimation;
 	private SpriteBatch spriteBatch;
 	private TextureRegion currentRobot;
+	private OrthographicCamera camera;
 	private float stateTime;
 	/*
 	 * end of robot stuff
 	 */
 	
-	public UnitArtist(){
+	public UnitArtist(OrthographicCamera camera){
+		this.camera = camera;
 		/*
 		 * robot
 		 */
-		int NCOLS = 12;
+		int NCOLS = 8;
 		int NROWS = 8;
-		robotSheet = new Texture(Gdx.files.internal("musket.png"));
+		robotSheet = new Texture(Gdx.files.internal("swordman.png"));
 		TextureRegion[][] tmp = TextureRegion.split(robotSheet, robotSheet.getWidth()/NCOLS, robotSheet.getHeight()/NROWS);
 		System.out.println(robotSheet.getWidth() + ":" + robotSheet.getHeight());
 		robotRegion = new TextureRegion[NROWS * NCOLS];
 		int index = 0;
 		System.out.println(tmp.length);
 		System.out.println(tmp[0].length);
-		robotRegion = new TextureRegion[3];
-		for (int i = 0; i < 3; i ++) {
+		robotRegion = new TextureRegion[8];
+		for (int i = 0; i < 8; i ++) {
 			robotRegion[i] = tmp[0][i];
 		}
 		/*
@@ -44,7 +47,7 @@ public class UnitArtist {
 			}
 		}
 		*/
-		robotAnimation = new Animation(0.5f,robotRegion);
+		robotAnimation = new Animation(0.1f,robotRegion);
 		spriteBatch = new SpriteBatch();
 		stateTime = 0;
 		/*
@@ -56,9 +59,8 @@ public class UnitArtist {
 		stateTime += Gdx.graphics.getDeltaTime();
 		currentRobot = robotAnimation.getKeyFrame(stateTime, true);
 		spriteBatch.begin();
-		spriteBatch.draw(currentRobot, x, y);
-		spriteBatch.draw(currentRobot, 100, 100, 50, 50, 30, 30, 2, 2, 0);
-
+		spriteBatch.setProjectionMatrix(camera.combined);
+		spriteBatch.draw(currentRobot, x, y, 0, 0, 20, 30, 2, 2, 0);
 		spriteBatch.end();
 	}
 }

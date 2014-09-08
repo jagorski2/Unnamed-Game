@@ -22,7 +22,7 @@ import com.mygdx.game.screens.BoardScreen;
  * @author ianno_000
  *
  */
-public class BattleInstance 
+public class BattleInstance
 {
 	
 
@@ -31,7 +31,6 @@ public class BattleInstance
 	private InstanceTile selected_tile;
 	private InstanceUnit selected_Unit;
 	private Instance instanceBean;					//comes from the database
-	
 	/*
 	 * robot
 	 */
@@ -144,24 +143,15 @@ public class BattleInstance
 
 		board.drawBoard();
 		
-		/*
-		for (InstanceUnit unit : units)
-		{
-			unit.drawUnit();
-		}
-		*/
 		if (this.focused_tile != null) 
 		{
 			this.drawFocusedHexagon();
 		}
+		if (robot == null) {
+			robot = new UnitArtist(BoardScreen.camera);
+		}
 		this.drawOccupiedTiles();
 		
-		if (robot == null) {
-			robot = new UnitArtist();
-		}
-			
-		
-		robot.drawRobot(50, 50);
 	}
 	
 	
@@ -189,7 +179,12 @@ public class BattleInstance
 					 Hexagon hex = tile.getHexagon();
 					 InstanceUnit unit = tile.getUnit();
 					 unit.setHexagon(hex);
+					 float points[] = hex.getVertices();
+					 int x = (int) points[0];
+					 int y = (int) points[1];
 					 unit.drawUnit();
+					 robot.drawRobot(x, y);
+					 
 				}
 			}
 		BoardScreen.project_shape_renderer.setColor(Color.BLACK);

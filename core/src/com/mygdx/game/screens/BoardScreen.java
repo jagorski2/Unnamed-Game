@@ -7,6 +7,7 @@ import com.app.models.Unit;
 import com.app.models.User;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -36,7 +37,7 @@ public class BoardScreen implements Screen{
 	public static Vector3 touchPos;
 	public static Vector3 rightPos;
 	private BattleInstance battle;
-
+	private AssetManager manager;
 
 	ShaderProgram shader;
 	public static boolean unitIsSelected = false;

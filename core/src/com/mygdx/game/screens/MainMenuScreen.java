@@ -4,6 +4,7 @@ package com.mygdx.game.screens;
 import com.app.models.Instance;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -22,7 +23,6 @@ public class MainMenuScreen implements Screen {
 	private MyGame game;
     private Stage stage = new Stage();
     private Table table = new Table();
-
     private Skin skin = new Skin(Gdx.files.internal("uiskin.json"),
         new TextureAtlas(Gdx.files.internal("uiskin.atlas")));
 
